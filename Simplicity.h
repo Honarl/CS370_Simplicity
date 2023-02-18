@@ -9,6 +9,92 @@
 #include <sstream>
 #include <iomanip>
 
+namespace simplicity{
+	class simple{
+			private:
+				static void printTop(int length, int width){
+					std::cout<<"+";
+					for(int j = 0; j < length; j++){
+						for(int i = 0; i < (width + 2); i++){
+							std::cout<<"-";
+						}
+						std::cout<<"+";
+					}
+					std::cout<<std::endl;
+				}
+				
+				static void printContent(int content[], int length, int width){
+					std::cout<<"|";
+					for(int i = 0; i < length; i++){
+						std::cout<<" ";
+						std::cout<<std::setw(width);
+						std::cout<<content[i];
+						std::cout<<" |";
+					}
+					std::cout<<std::endl;
+				}
+				
+				static void printBottom(int length, int width){
+					std::cout<<"+";
+					for(int j = 0; j < length; j++){ 
+						for(int i = 0; i < (width + 2); i++){
+							std::cout<<"-";
+						}
+						std::cout<<"+";
+					}
+					std::cout<<std::endl;
+					for(int i = 0; i < length; i++){
+						std::cout<<" ";
+						int halfway = 0;
+						if((width+2) % 2 == 0){
+							halfway = (width / 2);
+							std::cout<<" ";
+							std::cout<<std::setw(halfway)<<" "<<i;
+							
+							for(int j = 0; j < halfway; j++)
+								std::cout<<" ";	
+						}
+						else{
+							halfway = (width / 2) +1 ; 
 
+							std::cout<<" ";
+							std::cout<<std::setw(halfway)<<i;
+							
+							for(int j = 0; j < halfway; j++)
+								std::cout<<" ";		
+						}
+						
+						//std::cout<<" ";
+					}
+					
+					std::cout<<std::endl;
+				}
+				
+				static int widestNumber(int number[], int length){
+					int widest = 1;
+					for(int g = 0; g < length; g++){
+						int width = 1;	
+						int x = number[g];
+						while ( x /= 10)
+							width++;
+						if(width > widest)
+							widest = width;
+					}
+					return widest;
+				}
+				
+			public:
+				static void print(int content[], int length){
+					int width = widestNumber(content, length);
+					printTop(length, width);
+					printContent(content, length, width);
+					printBottom(length,width);
+				}
+				
+		
+	};
+	
+	
+}
 
 #endif // SIMPLICITY_H_INCLUDED
