@@ -23,7 +23,8 @@ namespace simplicity{
 					std::cout<<std::endl;
 				}
 				
-				static void printContent(int content[], int length, int width){
+				template <typename T>
+				static void printContent(T content[], int length, int width){
 					std::cout<<"|";
 					for(int i = 0; i < length; i++){
 						std::cout<<" ";
@@ -70,13 +71,15 @@ namespace simplicity{
 					std::cout<<std::endl;
 				}
 				
-				static int widestNumber(int number[], int length){
+				template <typename T>
+				static int widestMember(T content[], int len){
 					int widest = 1;
-					for(int g = 0; g < length; g++){
-						int width = 1;	
-						int x = number[g];
-						while ( x /= 10)
-							width++;
+					for(int g = 0; g < len; g++){
+						int width = 1;
+						std::ostringstream str1;			// output string stream
+						str1 << content[g];					// sending number to output as string
+						std::string content = str1.str();	// converting to string
+						width = content.length(); 			// getting length
 						if(width > widest)
 							widest = width;
 					}
@@ -84,8 +87,9 @@ namespace simplicity{
 				}
 				
 			public:
-				static void print(int content[], int length){
-					int width = widestNumber(content, length);
+				template <typename T>
+				static void print(T content[], int length){
+					int width = widestMember(content, length);
 					printTop(length, width);
 					printContent(content, length, width);
 					printBottom(length,width);
