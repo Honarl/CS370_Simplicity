@@ -15,7 +15,24 @@ int main (void){
 	int content[] = {626448,214748364,900,5,247,354};
 	int length = 6;
 
-	simplicity::simple::print(content,length); 
+	std::stack<int> testStack;
+	testStack.push(15);
+	testStack.push(350);
+	testStack.push(9);
+	testStack.push(23052);
+	testStack.push(986435);
+	testStack.push(2315);
+
+	std::queue<int> testQueue;
+	testQueue.push(15);
+	testQueue.push(350);
+	testQueue.push(9);
+	testQueue.push(23052);
+	testQueue.push(986435);
+	testQueue.push(2315);
+
+	simplicity::simple::printArray(content,length);
+	simplicity::simple::printQueue(testQueue,length);
 
     return EXIT_SUCCESS;
 }
