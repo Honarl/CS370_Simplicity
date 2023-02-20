@@ -23,6 +23,7 @@ int main (void){
 	testStack.push(986435);
 	testStack.push(2315);
 
+
 	std::queue<int> testQueue;
 	testQueue.push(15);
 	testQueue.push(350);
@@ -31,8 +32,12 @@ int main (void){
 	testQueue.push(986435);
 	testQueue.push(2315);
 
+
 	simplicity::simple::printArray(content,length);
 	simplicity::simple::printQueue(testQueue,length);
+	simplicity::simple::printStack(testStack,length);
+
+
 
     return EXIT_SUCCESS;
 }

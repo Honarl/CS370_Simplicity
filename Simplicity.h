@@ -35,7 +35,7 @@ namespace simplicity{
 				//I know it's another overload but I didn't want to mess with the naming conventions more than I already did -Morgan
 				template <typename T>
 				static void printContent(std::queue<T> &content, int length, int width){
-				    std::queue<T> temp;                                  // Making a new queue and cloning the input one
+				    std::queue<T> temp;                              // Making a new queue and cloning the input one
 				    temp = content;                                 // Otherwise we can't iterate without deleting it
 					std::cout<<"|";									// Leftmost member box
 					for(int i = 0; i < length; i++){				// loop to print whitespace and member
@@ -44,6 +44,31 @@ namespace simplicity{
 						temp.pop();                                 // Move to the next item in the new queue
 					}
 					std::cout<<std::endl;							// ending content line
+				}
+				//Printing for stacks
+				template <typename T>
+				static void printContent(std::stack<T> &content, int length, int width){
+				    std::stack<T> temp;                             // Making a new stack and cloning the input one
+				    temp = content;                                 // Otherwise we can't iterate without deleting it
+				    std::cout<<"+";                                 // Formatting to match arrays and queues
+				    for(int j = 0; j < (width + 2); j++){
+                        std::cout<<"-";                             // Makes the boxes the same size
+				    }
+				    std::cout<<"+";                                 // Formatting for top line done
+				    std::cout<<std::endl;
+					for(int i = 0; i < length; i++){				// loop to print whitespace and member
+						std::cout<<"| "<<std::setw(width);
+						std::cout<<temp.top()<<" |"<<" "<<i;
+						temp.pop();                                 // Move to the next item in the new stack
+                        std::cout<<std::endl;						// Next line for next item
+                        std::cout<<"+";                             // Box formatting below
+                        for(int j = 0; j < (width + 2); j++){
+                            std::cout<<"-";
+				    }
+                        std::cout<<"+";                             // End box formatting
+                        std::cout<<std::endl;                       // Next item
+					}
+
 				}
 
 				static void printBottom(int length, int width){
@@ -93,12 +118,30 @@ namespace simplicity{
 				template <typename T>
 				static int widestMember(std::queue<T> &content, int len){
 					int widest = 1;							// Setting current widest to minimum of one
-					std::queue<T> temp;                          // Make a temporary queue
+					std::queue<T> temp;                     // Make a temporary queue
 					temp = content;                         // Clone the input queue so we can manipulate it
 					for(int g = 0; g < len; g++){			// looping through all members of struct
 						int width = 1;						// setting minimum width to 1
 						std::ostringstream str1;			// output string stream
 						str1 << temp.front();				// sending number to output as string
+						std::string content = str1.str();	// converting to string
+						width = content.length(); 			// getting length
+						if(width > widest)					// checking if current member is widest
+							widest = width;
+                        temp.pop();                         // Move to the next item in the queue
+					}
+					return widest;
+				}
+				//Determining the widest member in the stack, this one is the third (and hopefully last) overload
+				template <typename T>
+				static int widestMember(std::stack<T> &content, int len){
+					int widest = 1;							// Setting current widest to minimum of one
+					std::stack<T> temp;                     // Make a temporary stack
+					temp = content;                         // Clone the input queue so we can manipulate it
+					for(int g = 0; g < len; g++){			// looping through all members of struct
+						int width = 1;						// setting minimum width to 1
+						std::ostringstream str1;			// output string stream
+						str1 << temp.top();				    // sending number to output as string
 						std::string content = str1.str();	// converting to string
 						width = content.length(); 			// getting length
 						if(width > widest)					// checking if current member is widest
@@ -123,6 +166,12 @@ namespace simplicity{
 					printTop(length, width);					// printing top of structure
 					printContent(content, length, width);		// printing content of struct
 					printBottom(length,width);					// printing bottom of struct and indexs
+				}
+				//Stacks are vertical they're gonna be a bit different
+				template <typename T>
+				static void printStack(std::stack<T>& content, int length){
+				    int width = widestMember(content, length); // Find largest item in the entire stack
+				    printContent(content, length, width);      // Stack printContent() works to print the entire stack as the two are intertwined
 				}
 
 
