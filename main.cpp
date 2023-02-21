@@ -12,7 +12,7 @@ int main (void){
 
     std::cout<<"Cycle Intent: Visualize Arrays, Stacks, and Queues from a CS 240 student's program graphically, using ASCII characters, in a simple and easy-to-understand format\n";
 
-	int content[] = {626448,214748364,900,5,247,354};
+	int content[] = {626448,2147483647,900,5,247,354};
 	int length = 6;
 
 	std::stack<int> testStack;

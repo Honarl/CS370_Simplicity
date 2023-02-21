@@ -1,5 +1,6 @@
 #ifndef SIMPLICITY_H_INCLUDED
 #define SIMPLICITY_H_INCLUDED
+#include "rogueutil.h"
 #include <stack>
 #include <queue>
 #include <string>
@@ -13,6 +14,7 @@ namespace simplicity{
 	class simple{
 			private:
 				static void printTop(int length, int width){
+					rogueutil::setColor(2);						// setting color to green
 					std::cout<<"+";								// printing leftmost corner
 					for(int j = 0; j < length; j++){			// loop to end current member box
 						for(int i = 0; i < (width + 2); i++){	// loop to print width
@@ -21,26 +23,37 @@ namespace simplicity{
 						std::cout<<"+";
 					}
 					std::cout<<std::endl;						// ending top structure
+					rogueutil::setColor(15);					// setting back to original color
 				}
 
 				template <typename T>
 				static void printContent(T content[], int length, int width){
+					rogueutil::setColor(2);							// setting color to green
 					std::cout<<"|";									// Leftmost member box
+					rogueutil::setColor(15);						// setting back to original color
 					for(int i = 0; i < length; i++){				// loop to print whitespace and member
 						std::cout<<" "<<std::setw(width);
-						std::cout<<content[i]<<" |";
+						std::cout<<content[i];
+						rogueutil::setColor(2);						// setting color to green
+						std::cout<<" |";
+						rogueutil::setColor(15);					// setting back to original color
 					}
 					std::cout<<std::endl;							// ending content line
 				}
 				//I know it's another overload but I didn't want to mess with the naming conventions more than I already did -Morgan
 				template <typename T>
 				static void printContent(std::queue<T> &content, int length, int width){
-				    std::queue<T> temp;                              // Making a new queue and cloning the input one
+				    std::queue<T> temp;                             // Making a new queue and cloning the input one
 				    temp = content;                                 // Otherwise we can't iterate without deleting it
+					rogueutil::setColor(2);							// setting color to green
 					std::cout<<"|";									// Leftmost member box
+					rogueutil::setColor(15);						// setting back to original color
 					for(int i = 0; i < length; i++){				// loop to print whitespace and member
 						std::cout<<" "<<std::setw(width);
-						std::cout<<temp.front()<<" |";
+						std::cout<<temp.front();
+						rogueutil::setColor(2);						// setting color to green
+						std::cout<<" |";
+						rogueutil::setColor(15);					// setting back to original color
 						temp.pop();                                 // Move to the next item in the new queue
 					}
 					std::cout<<std::endl;							// ending content line
@@ -50,15 +63,20 @@ namespace simplicity{
 				static void printContent(std::stack<T> &content, int length, int width){
 				    std::stack<T> temp;                             // Making a new stack and cloning the input one
 				    temp = content;                                 // Otherwise we can't iterate without deleting it
-				    std::cout<<"+";                                 // Formatting to match arrays and queues
+				    rogueutil::setColor(2);							// setting color to green
+					std::cout<<"+";                                 // Formatting to match arrays and queues
 				    for(int j = 0; j < (width + 2); j++){
                         std::cout<<"-";                             // Makes the boxes the same size
 				    }
 				    std::cout<<"+";                                 // Formatting for top line done
 				    std::cout<<std::endl;
 					for(int i = 0; i < length; i++){				// loop to print whitespace and member
+						rogueutil::setColor(2);						// setting color to green
 						std::cout<<"| "<<std::setw(width);
-						std::cout<<temp.top()<<" |"<<" "<<i;
+						rogueutil::setColor(15);					// setting back to original color
+						std::cout<<temp.top();
+						rogueutil::setColor(2);						// setting color to green
+						std::cout<<" | "<<i;
 						temp.pop();                                 // Move to the next item in the new stack
                         std::cout<<std::endl;						// Next line for next item
                         std::cout<<"+";                             // Box formatting below
@@ -66,12 +84,14 @@ namespace simplicity{
                             std::cout<<"-";
 				    }
                         std::cout<<"+";                             // End box formatting
-                        std::cout<<std::endl;                       // Next item
+                        rogueutil::setColor(15);					// setting back to original color
+						std::cout<<std::endl;                       // Next item
 					}
 
 				}
 
 				static void printBottom(int length, int width){
+					rogueutil::setColor(2);								// setting color to green
 					std::cout<<"+";										// ending leftmost corner
 					for(int j = 0; j < length; j++){ 					// loop to print corner marker
 						for(int i = 0; i < (width + 2); i++){			// loop to print bottom line
@@ -97,6 +117,7 @@ namespace simplicity{
 								std::cout<<" ";
 						}
 					}
+					rogueutil::setColor(15);							// setting back to original color
 					std::cout<<std::endl;								// end index line
 				}
 
@@ -154,6 +175,7 @@ namespace simplicity{
 			public:
 				template <typename T>
 				static void printArray(T content[], int length){
+					std::cout<<"Printing Array"<<std::endl;
 					int width = widestMember(content, length);	// finding the width to print
 					printTop(length, width);					// printing top of structure
 					printContent(content, length, width);		// printing content of struct
@@ -162,6 +184,9 @@ namespace simplicity{
                 //Queue version, I made an overload of printContent() and widestMember() to fit the new structure -Morgan
 				template <typename T>
 				static void printQueue(std::queue<T>& content, int length){
+					std::cout<<"Printng Queue"<<std::endl;
+					std::cout<<"Front: "<<content.front()<<std::endl;
+					std::cout<<"Back: "<<content.back()<<std::endl;
 					int width = widestMember(content, length);	// finding the width to print
 					printTop(length, width);					// printing top of structure
 					printContent(content, length, width);		// printing content of struct
@@ -170,6 +195,8 @@ namespace simplicity{
 				//Stacks are vertical they're gonna be a bit different
 				template <typename T>
 				static void printStack(std::stack<T>& content, int length){
+					std::cout<<"Printing Stack"<<std::endl;
+					std::cout<<"Top: "<<content.top()<<std::endl;
 				    int width = widestMember(content, length); // Find largest item in the entire stack
 				    printContent(content, length, width);      // Stack printContent() works to print the entire stack as the two are intertwined
 				}
