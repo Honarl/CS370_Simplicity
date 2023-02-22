@@ -208,6 +208,8 @@ namespace simplicity{
 					printTop(length, width);					// printing top of structure
 					printContent(content, length, width);		// printing content of struct
 					printBottom(length,width);					// printing bottom of struct and indexs
+					//rogueutil::anykey();
+					//rogueutil::cls();
 				}
                 //Queue version, I made an overload of printContent() and widestMember() to fit the new structure -Morgan
 				template <typename T>
@@ -219,6 +221,7 @@ namespace simplicity{
 					printTop(length, width);					// printing top of structure
 					printContent(content, length, width);		// printing content of struct
 					printBottom(length,width);					// printing bottom of struct and indexs
+					
 				}
 				//Stacks are vertical they're gonna be a bit different
 				template <typename T>
@@ -227,6 +230,13 @@ namespace simplicity{
 					std::cout<<"Top: "<<content.top()<<std::endl;
 				    int width = widestMember(content, length); // Find largest item in the entire stack
 				    printContent(content, length, width);      // Stack printContent() works to print the entire stack as the two are intertwined
+				}
+				
+				static void windowSize(){
+					int rows = 	rogueutil::trows();
+					int col = rogueutil::tcols();
+					std::cout<<"rows: "<<rows<<std::endl;
+					std::cout<<"cols: "<<col<<std::endl;
 				}
 
 
