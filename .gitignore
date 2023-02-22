@@ -1,3 +1,6 @@
 main.exe
 main.o
 a.exe
+SimplicityArrayOutput.txt
+SimplicityQueueOutput.txt
+SimplicityStackOutput.txt

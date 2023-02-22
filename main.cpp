@@ -34,8 +34,11 @@ int main (void){
 
 
 	simplicity::simple::printArray(content,length);
+	simplicity::simple::arrayToFile(content,length);	
 	simplicity::simple::printQueue(testQueue,length);
+	simplicity::simple::queueToFile(testQueue,length);
 	simplicity::simple::printStack(testStack,length);
+	simplicity::simple::stackToFile(testStack,length);
 
 
 

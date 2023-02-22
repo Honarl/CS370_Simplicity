@@ -9,6 +9,7 @@
 #include <typeinfo>
 #include <sstream>
 #include <iomanip>
+#include <fstream>
 
 namespace simplicity{
 	class simple{
@@ -173,6 +174,33 @@ namespace simplicity{
 				}
 
 			public:
+				template<typename T>
+				static void arrayToFile(T content[], int length){
+					std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
+					auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+					std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+					printArray(content, length);					// filling file buffer with data from function call
+					std::cout.rdbuf(cout_buff);						// returning control to cout
+				}
+				
+				template <typename T>
+				static void queueToFile(std::queue<T>& content, int length){
+					std::ofstream ofs{"SimplicityQueueOutput.txt"};	// declaring output file
+					auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+					std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+					printQueue(content, length);					// filling file buffer with data from function call
+					std::cout.rdbuf(cout_buff);						// returning control to cout
+				}
+				
+				template <typename T>
+				static void stackToFile(std::stack<T>& content, int length){	
+					std::ofstream ofs{"SimplicityStackOutput.txt"};	// declaring output file
+					auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+					std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+					printStack(content, length);					// filling file buffer with data from function call
+					std::cout.rdbuf(cout_buff);						// returning control to cout
+					}
+				
 				template <typename T>
 				static void printArray(T content[], int length){
 					std::cout<<"Printing Array"<<std::endl;
