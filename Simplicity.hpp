@@ -176,62 +176,95 @@ namespace simplicity{
 			public:
 				template<typename T>
 				static void arrayToFile(T content[], int length){
-					std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
-					auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
-					std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
-					printArray(content, length);					// filling file buffer with data from function call
-					std::cout.rdbuf(cout_buff);						// returning control to cout
+				    if(length > 0){
+                        std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
+                        auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+                        std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+                        printArray(content, length);					// filling file buffer with data from function call
+                        std::cout.rdbuf(cout_buff);						// returning control to cout
+				    }
+				    else{
+                        std::cout<<"Looks like your array is empty! That file would be nothing!";
+				    }
+
 				}
-				
+
 				template <typename T>
 				static void queueToFile(std::queue<T>& content, int length){
-					std::ofstream ofs{"SimplicityQueueOutput.txt"};	// declaring output file
-					auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
-					std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
-					printQueue(content, length);					// filling file buffer with data from function call
-					std::cout.rdbuf(cout_buff);						// returning control to cout
+				    if(!content.empty()){
+                        std::ofstream ofs{"SimplicityQueueOutput.txt"};	// declaring output file
+                        auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+                        std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+                        printQueue(content, length);					// filling file buffer with data from function call
+                        std::cout.rdbuf(cout_buff);						// returning control to cout
+				    }
+				    else{
+                        std::cout<<"Looks like your queue is empty! That file would be nothing!";
+				    }
+
 				}
-				
+
 				template <typename T>
-				static void stackToFile(std::stack<T>& content, int length){	
-					std::ofstream ofs{"SimplicityStackOutput.txt"};	// declaring output file
-					auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
-					std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
-					printStack(content, length);					// filling file buffer with data from function call
-					std::cout.rdbuf(cout_buff);						// returning control to cout
-					}
-				
+				static void stackToFile(std::stack<T>& content, int length){
+				    if(!content.empty()){
+                        std::ofstream ofs{"SimplicityStackOutput.txt"};	// declaring output file
+                        auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+                        std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+                        printStack(content, length);					// filling file buffer with data from function call
+                        std::cout.rdbuf(cout_buff);						// returning control to cout
+
+                    }
+                    else{
+                        std::cout<<"Looks like your stack is empty! That file would be nothing!";
+                    }
+                }
+
 				template <typename T>
 				static void printArray(T content[], int length){
-					std::cout<<"Printing Array"<<std::endl;
-					int width = widestMember(content, length);	// finding the width to print
-					printTop(length, width);					// printing top of structure
-					printContent(content, length, width);		// printing content of struct
-					printBottom(length,width);					// printing bottom of struct and indexs
-					//rogueutil::anykey();
-					//rogueutil::cls();
+				    if(length > 0){
+                        std::cout<<"Printing Array"<<std::endl;
+                        int width = widestMember(content, length);	// finding the width to print
+                        printTop(length, width);					// printing top of structure
+                        printContent(content, length, width);		// printing content of struct
+                        printBottom(length,width);					// printing bottom of struct and indexs
+                        //rogueutil::anykey();
+                        //rogueutil::cls();
+				    }
+				    else{
+                        std::cout<<"Your array is empty!";
+				    }
+
 				}
                 //Queue version, I made an overload of printContent() and widestMember() to fit the new structure -Morgan
 				template <typename T>
 				static void printQueue(std::queue<T>& content, int length){
-					std::cout<<"Printng Queue"<<std::endl;
-					std::cout<<"Front: "<<content.front()<<std::endl;
-					std::cout<<"Back: "<<content.back()<<std::endl;
-					int width = widestMember(content, length);	// finding the width to print
-					printTop(length, width);					// printing top of structure
-					printContent(content, length, width);		// printing content of struct
-					printBottom(length,width);					// printing bottom of struct and indexs
-					
+				    if(!content.empty()){
+                        std::cout<<"Printng Queue"<<std::endl;
+                        std::cout<<"Front: "<<content.front()<<std::endl;
+                        std::cout<<"Back: "<<content.back()<<std::endl;
+                        int width = widestMember(content, length);	// finding the width to print
+                        printTop(length, width);					// printing top of structure
+                        printContent(content, length, width);		// printing content of struct
+                        printBottom(length,width);					// printing bottom of struct and indexs
+				    }
+				    else{
+                        std::cout<<"Your queue is empty!";
+				    }
 				}
 				//Stacks are vertical they're gonna be a bit different
 				template <typename T>
 				static void printStack(std::stack<T>& content, int length){
-					std::cout<<"Printing Stack"<<std::endl;
-					std::cout<<"Top: "<<content.top()<<std::endl;
-				    int width = widestMember(content, length); // Find largest item in the entire stack
-				    printContent(content, length, width);      // Stack printContent() works to print the entire stack as the two are intertwined
+				    if(!content.empty()){
+                        std::cout<<"Printing Stack"<<std::endl;
+                        std::cout<<"Top: "<<content.top()<<std::endl;
+                        int width = widestMember(content, length); // Find largest item in the entire stack
+                        printContent(content, length, width);      // Stack printContent() works to print the entire stack as the two are intertwined
+				    }
+				    else{
+                        std::cout<<"Your stack is empty!";
+				    }
 				}
-				
+
 				static void windowSize(){
 					int rows = 	rogueutil::trows();
 					int col = rogueutil::tcols();
