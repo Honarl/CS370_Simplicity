@@ -11,9 +11,9 @@ int main (void){
 
     std::cout<<"Cycle Intent: Visualize Arrays, Stacks, and Queues from a CS 240 student's program graphically, using ASCII characters, in a simple and easy-to-understand format\n";
 */
-	int content[] = {626448,2147483647,900,5,247,354};
-	int length = 6;
-
+//	double content[] = {31248.9756,626448,2147483647,900,5,247,354,25.54,623,6541,635,651,321.6854,321,351,351};
+//	int length = sizeof(content)/sizeof(double);
+/*
 	std::stack<int> testStack;
 	testStack.push(15);
 	testStack.push(350);
@@ -21,7 +21,7 @@ int main (void){
 	testStack.push(23052);
 	testStack.push(986435);
 	testStack.push(2315);
-
+*/
 
 	std::queue<int> testQueue;
 	testQueue.push(15);
@@ -30,14 +30,15 @@ int main (void){
 	testQueue.push(23052);
 	testQueue.push(986435);
 	testQueue.push(2315);
+	int length = 6;
 
 
-	simplicity::simple::printArray(content,length);
-	simplicity::simple::arrayToFile(content,length);	
+//	simplicity::simple::printArray(content,length);
+//	simplicity::simple::arrayToFile(content,length);	
 	simplicity::simple::printQueue(testQueue,length);
-	simplicity::simple::queueToFile(testQueue,length);
-	simplicity::simple::printStack(testStack,length);
-	simplicity::simple::stackToFile(testStack,length);
+//	simplicity::simple::queueToFile(testQueue,length);
+//	simplicity::simple::printStack(testStack,length);
+//	simplicity::simple::stackToFile(testStack,length);
 
 	//simplicity::simple::windowSize();
 

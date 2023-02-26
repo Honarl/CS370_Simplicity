@@ -14,10 +14,10 @@
 namespace simplicity{
 	class simple{
 			private:
-				static void printTop(int length, int width){
+				static void printTop(int rowWidth, int width){
 					rogueutil::setColor(2);						// setting color to green
 					std::cout<<"+";								// printing leftmost corner
-					for(int j = 0; j < length; j++){			// loop to end current member box
+					for(int j = 0; j < rowWidth; j++){			// loop to end current member box
 						for(int i = 0; i < (width + 2); i++){	// loop to print width
 							std::cout<<"-";
 						}
@@ -28,11 +28,12 @@ namespace simplicity{
 				}
 
 				template <typename T>
-				static void printContent(T content[], int length, int width){
+				static void printContent(T content[], int start, int length, int width){
 					rogueutil::setColor(2);							// setting color to green
 					std::cout<<"|";									// Leftmost member box
 					rogueutil::setColor(15);						// setting back to original color
-					for(int i = 0; i < length; i++){				// loop to print whitespace and member
+					int end = start + length;
+					for(int i = start; i < end; i++){				// loop to print whitespace and member
 						std::cout<<" "<<std::setw(width);
 						std::cout<<content[i];
 						rogueutil::setColor(2);						// setting color to green
@@ -43,13 +44,17 @@ namespace simplicity{
 				}
 				//I know it's another overload but I didn't want to mess with the naming conventions more than I already did -Morgan
 				template <typename T>
-				static void printContent(std::queue<T> &content, int length, int width){
+				static void printContent(std::queue<T> &content, int start, int length, int width){
 				    std::queue<T> temp;                             // Making a new queue and cloning the input one
 				    temp = content;                                 // Otherwise we can't iterate without deleting it
 					rogueutil::setColor(2);							// setting color to green
 					std::cout<<"|";									// Leftmost member box
 					rogueutil::setColor(15);						// setting back to original color
-					for(int i = 0; i < length; i++){				// loop to print whitespace and member
+					if(start != 0){									// making so the queue start matches the correct location for what has and hasnt been printed
+						for(int i = 0; i < start; i++)
+							temp.pop();
+					}
+					for(int i = 0; i < length; i++){			// loop to print whitespace and member
 						std::cout<<" "<<std::setw(width);
 						std::cout<<temp.front();
 						rogueutil::setColor(2);						// setting color to green
@@ -91,10 +96,11 @@ namespace simplicity{
 
 				}
 
-				static void printBottom(int length, int width){
+				static void printBottom(int start, int printWidth, int width){
+					int end = start + printWidth;
 					rogueutil::setColor(2);								// setting color to green
 					std::cout<<"+";										// ending leftmost corner
-					for(int j = 0; j < length; j++){ 					// loop to print corner marker
+					for(int j = 0; j < printWidth; j++){ 					// loop to print corner marker
 						for(int i = 0; i < (width + 2); i++){			// loop to print bottom line
 							std::cout<<"-";
 						}
@@ -102,18 +108,22 @@ namespace simplicity{
 					}
 					std::cout<<std::endl;								// ending bottom of structure
 
-					for(int i = 0; i < length; i++){					// loop to print indexs
+					for(int i = start; i < end; i++){					// loop to print indexs
 						std::cout<<" ";
 						int halfway = 0;								// initializing to zero
 						if((width+2) % 2 == 0){							// checking if member takes up an even number of spaces
 							halfway = (width / 2);						// setting midpoint
 							std::cout<<" "<<std::setw(halfway)<<" "<<i;	// printing index with appropiate whitespace
+							if(i >= 10)									// to account for double digit numbers
+								halfway -= 1;
 							for(int j = 0; j < halfway; j++)			// loop to finish printing out whitespace
 								std::cout<<" ";
 						}
 						else{											// widest data must take up an odd number of spaces
 							halfway = (width / 2) + 1 ; 				// setting halfway point and rounding up
 							std::cout<<" "<<std::setw(halfway)<<i;		// printing whitespace and index
+							if(i >= 10)									// to account for double digit numbers
+								halfway -= 1;
 							for(int j = 0; j < halfway; j++)			// loop to finish printing whitespace
 								std::cout<<" ";
 						}
@@ -223,29 +233,49 @@ namespace simplicity{
 				static void printArray(T content[], int length){
 				    if(length > 0){
                         std::cout<<"Printing Array"<<std::endl;
-                        int width = widestMember(content, length);	// finding the width to print
-                        printTop(length, width);					// printing top of structure
-                        printContent(content, length, width);		// printing content of struct
-                        printBottom(length,width);					// printing bottom of struct and indexs
-                        //rogueutil::anykey();
-                        //rogueutil::cls();
+                        int width = widestMember(content, length);			// finding the width to print
+                        int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
+						int rowTotalWidth = (width+3) * length;				// finding total length of struct in chars
+						while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
+							rowTotalWidth -= (width +4);
+						}
+						int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
+						for(int j = 0; j < length; j += boxPerRow){
+							if(j + boxPerRow > length)						// making it so it won't over print boxes
+								boxPerRow = length-j;
+							printTop(boxPerRow, width);						// printing top of structure
+							printContent(content, j, boxPerRow, width);		// printing content of struct
+							printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
+							std::cout<<std::endl;
+						}
 				    }
 				    else{
-                        std::cout<<"Your array is empty!";
+                        std::cout<<"Your array is empty! Nothing to print.";
 				    }
 
 				}
-                //Queue version, I made an overload of printContent() and widestMember() to fit the new structure -Morgan
+               //Queue version, I made an overload of printContent() and widestMember() to fit the new structure -Morgan
 				template <typename T>
 				static void printQueue(std::queue<T>& content, int length){
 				    if(!content.empty()){
                         std::cout<<"Printng Queue"<<std::endl;
                         std::cout<<"Front: "<<content.front()<<std::endl;
                         std::cout<<"Back: "<<content.back()<<std::endl;
-                        int width = widestMember(content, length);	// finding the width to print
-                        printTop(length, width);					// printing top of structure
-                        printContent(content, length, width);		// printing content of struct
-                        printBottom(length,width);					// printing bottom of struct and indexs
+                        int width = widestMember(content, length);			// finding the width to print
+                        int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
+						int rowTotalWidth = (width+3) * length;				// finding total length of struct in chars
+						while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
+							rowTotalWidth -= (width +4);
+						}
+						int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
+						for(int j = 0; j < length; j += boxPerRow){
+							if(j + boxPerRow > length)						// making it so it won't over print boxes
+								boxPerRow = length-j;
+							printTop(boxPerRow, width);						// printing top of structure
+							printContent(content, j, boxPerRow, width);		// printing content of struct
+							printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
+							std::cout<<std::endl;
+						}
 				    }
 				    else{
                         std::cout<<"Your queue is empty!";
