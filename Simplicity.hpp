@@ -200,8 +200,9 @@ namespace simplicity{
 				}
 
 				template <typename T>
-				static void queueToFile(std::queue<T>& content, int length){
+				static void queueToFile(std::queue<T>& content){
 				    if(!content.empty()){
+                        int length = content.size();
                         std::ofstream ofs{"SimplicityQueueOutput.txt"};	// declaring output file
                         auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
                         std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
@@ -215,8 +216,9 @@ namespace simplicity{
 				}
 
 				template <typename T>
-				static void stackToFile(std::stack<T>& content, int length){
+				static void stackToFile(std::stack<T>& content){
 				    if(!content.empty()){
+                        int length = content.size();
                         std::ofstream ofs{"SimplicityStackOutput.txt"};	// declaring output file
                         auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
                         std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
@@ -256,22 +258,22 @@ namespace simplicity{
 				}
                //Queue version, I made an overload of printContent() and widestMember() to fit the new structure -Morgan
 				template <typename T>
-				static void printQueue(std::queue<T>& content, int length){
+				static void printQueue(std::queue<T>& content){
 				    if(!content.empty()){
-                        int newlength = content.size();
+                        int length = content.size();
                         std::cout<<"Printing Queue"<<std::endl;
                         std::cout<<"Front: "<<content.front()<<std::endl;
                         std::cout<<"Back: "<<content.back()<<std::endl;
-                        int width = widestMember(content, newlength);			// finding the width to print
+                        int width = widestMember(content, length);			// finding the width to print
                         int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
-						int rowTotalWidth = (width+3) * newlength;				// finding total length of struct in chars
+						int rowTotalWidth = (width+3) * length;				// finding total length of struct in chars
 						while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
 							rowTotalWidth -= (width +4);
 						}
 						int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
-						for(int j = 0; j < newlength; j += boxPerRow){
-							if(j + boxPerRow > newlength)						// making it so it won't over print boxes
-								boxPerRow = newlength-j;
+						for(int j = 0; j < length; j += boxPerRow){
+							if(j + boxPerRow > length)						// making it so it won't over print boxes
+								boxPerRow = length-j;
 							printTop(boxPerRow, width);						// printing top of structure
 							printContent(content, j, boxPerRow, width);		// printing content of struct
 							printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
@@ -284,8 +286,9 @@ namespace simplicity{
 				}
 				//Stacks are vertical they're gonna be a bit different
 				template <typename T>
-				static void printStack(std::stack<T>& content, int length){
+				static void printStack(std::stack<T>& content){
 				    if(!content.empty()){
+                        int length = content.size();
                         std::cout<<"Printing Stack"<<std::endl;
                         std::cout<<"Top: "<<content.top()<<std::endl;
                         int width = widestMember(content, length); // Find largest item in the entire stack
