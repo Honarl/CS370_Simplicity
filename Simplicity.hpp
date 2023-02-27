@@ -258,19 +258,20 @@ namespace simplicity{
 				template <typename T>
 				static void printQueue(std::queue<T>& content, int length){
 				    if(!content.empty()){
+                        int newlength = content.size();
                         std::cout<<"Printing Queue"<<std::endl;
                         std::cout<<"Front: "<<content.front()<<std::endl;
                         std::cout<<"Back: "<<content.back()<<std::endl;
-                        int width = widestMember(content, length);			// finding the width to print
+                        int width = widestMember(content, newlength);			// finding the width to print
                         int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
-						int rowTotalWidth = (width+3) * length;				// finding total length of struct in chars
+						int rowTotalWidth = (width+3) * newlength;				// finding total length of struct in chars
 						while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
 							rowTotalWidth -= (width +4);
 						}
 						int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
-						for(int j = 0; j < length; j += boxPerRow){
-							if(j + boxPerRow > length)						// making it so it won't over print boxes
-								boxPerRow = length-j;
+						for(int j = 0; j < newlength; j += boxPerRow){
+							if(j + boxPerRow > newlength)						// making it so it won't over print boxes
+								boxPerRow = newlength-j;
 							printTop(boxPerRow, width);						// printing top of structure
 							printContent(content, j, boxPerRow, width);		// printing content of struct
 							printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
