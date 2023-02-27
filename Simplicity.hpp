@@ -185,12 +185,13 @@ namespace simplicity{
 
 			public:
 				template<typename T>
-				static void arrayToFile(T content[], int length){
-				    if(length > 0){
+				static void arrayToFile(T &content){
+				    int length = sizeof(content)/sizeof(content[0]);
+					if(length > 0){
                         std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
                         auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
                         std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
-                        printArray(content, length);					// filling file buffer with data from function call
+                        printArray(content);					// filling file buffer with data from function call
                         std::cout.rdbuf(cout_buff);						// returning control to cout
 				    }
 				    else{
@@ -232,7 +233,8 @@ namespace simplicity{
                 }
 
 				template <typename T>
-				static void printArray(T content[], int length){
+				static void printArray(T &content){
+					int length = sizeof(content)/sizeof(content[0]);
 				    if(length > 0){
                         std::cout<<"Printing Array"<<std::endl;
                         int width = widestMember(content, length);			// finding the width to print
