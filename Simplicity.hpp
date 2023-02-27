@@ -258,7 +258,7 @@ namespace simplicity{
 				template <typename T>
 				static void printQueue(std::queue<T>& content, int length){
 				    if(!content.empty()){
-                        std::cout<<"Printng Queue"<<std::endl;
+                        std::cout<<"Printing Queue"<<std::endl;
                         std::cout<<"Front: "<<content.front()<<std::endl;
                         std::cout<<"Back: "<<content.back()<<std::endl;
                         int width = widestMember(content, length);			// finding the width to print
