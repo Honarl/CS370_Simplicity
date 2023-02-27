@@ -278,7 +278,7 @@ namespace simplicity{
 						}
 				    }
 				    else{
-                        std::cout<<"Your queue is empty!";
+                        std::cout<<"Your queue is empty! Garbage data may follow!";
 				    }
 				}
 				//Stacks are vertical they're gonna be a bit different
@@ -291,7 +291,7 @@ namespace simplicity{
                         printContent(content, length, width);      // Stack printContent() works to print the entire stack as the two are intertwined
 				    }
 				    else{
-                        std::cout<<"Your stack is empty!";
+                        std::cout<<"Your stack is empty! Garbage data may follow!";
 				    }
 				}
 
