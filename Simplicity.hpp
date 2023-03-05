@@ -3,6 +3,7 @@
 #include "rogueutil.h"
 #include <stack>
 #include <queue>
+#include <vector>
 #include <string>
 #include <iostream>
 #include <limits>
@@ -10,6 +11,7 @@
 #include <sstream>
 #include <iomanip>
 #include <fstream>
+#include <span>
 
 namespace simplicity{
 	class simple{
@@ -93,7 +95,22 @@ namespace simplicity{
                         rogueutil::setColor(15);					// setting back to original color
 						std::cout<<std::endl;                       // Next item
 					}
-
+				}
+				
+				template <typename T, std::size_t length>			// overload for printing from span
+				static void printContent(std::span<T,length> content, int start, int len, int width){
+					rogueutil::setColor(2);							// setting color to green
+					std::cout<<"|";									// Leftmost member box
+					rogueutil::setColor(15);						// setting back to original color
+					int end = start + len;
+					for(int i = start; i < end; i++){				// loop to print whitespace and member
+						std::cout<<" "<<std::setw(width);
+						std::cout<<content[i];
+						rogueutil::setColor(2);						// setting color to green
+						std::cout<<" |";
+						rogueutil::setColor(15);					// setting back to original color
+					}
+					std::cout<<std::endl;							// ending content line
 				}
 
 				static void printBottom(int start, int printWidth, int width){
@@ -182,6 +199,21 @@ namespace simplicity{
 					}
 					return widest;
 				}
+				
+				template <typename T, std::size_t length>
+				static int widestMember(std::span<T, length>content, int len){
+					int widest = 1;							// Setting current widest to minimum of one
+					for(auto it = content.begin(); it != content.end(); ++it) {		// looping through all members of struct
+						int width = 1;						// setting minimum width to 1
+						std::ostringstream str1;			// output string stream
+						str1 << *it;					// sending number to output as string
+						std::string item = str1.str();	// converting to string
+						width = item.length(); 			// getting length
+						if(width > widest)					// checking if current member is widest
+							widest = width;
+					}
+					return widest;
+				}
 
 			public:
 				template<typename T>
@@ -231,7 +263,32 @@ namespace simplicity{
                         std::cout<<"Looks like your stack is empty! That file would be nothing!";
                     }
                 }
-
+				
+				template<typename T, std::size_t length>
+				static void printArray(std::array<T,length>&content){				// overload for Array stl container
+					int len = content.size();
+					if(len > 0){
+						std::cout<<"Printing Array"<<std::endl;
+						int width = widestMember(std::span{content}, len);	// finding the width to print
+						int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
+						int rowTotalWidth = (width+3) * len;				// finding total length of struct in chars
+						while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
+							rowTotalWidth -= (width +4);
+						}
+						int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
+						for(int j = 0; j < len; j += boxPerRow){
+							if(j + boxPerRow > len)							// making it so it won't over print boxes
+								boxPerRow = len-j;
+							printTop(boxPerRow, width);						// printing top of structure
+							printContent(std::span{content}, j, boxPerRow, width);		// printing content of struct
+							printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
+							std::cout<<std::endl;
+						}
+					}
+					else
+						std::cout<<"Your array is empty! Nothing to print.";
+				}
+				
 				template <typename T>
 				static void printArray(T &content){
 					int length = sizeof(content)/sizeof(content[0]);
@@ -300,18 +357,32 @@ namespace simplicity{
                         std::cout<<"Your stack is empty! Garbage data may follow!";
 				    }
 				}
-
-				static void windowSize(){
-					int rows = 	rogueutil::trows();
-					int col = rogueutil::tcols();
-					std::cout<<"rows: "<<rows<<std::endl;
-					std::cout<<"cols: "<<col<<std::endl;
+				
+				template<typename T>
+				static void printVector(std::vector<T>&content){					// overload for vectors
+					int len = content.size();
+					if(len > 0){
+						std::cout<<"Printing Vector"<<std::endl;
+						int width = widestMember(std::span{content}, len);	// finding the width to print
+						int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
+						int rowTotalWidth = (width+3) * len;				// finding total length of struct in chars
+						while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
+							rowTotalWidth -= (width +4);
+						}
+						int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
+						for(int j = 0; j < len; j += boxPerRow){
+							if(j + boxPerRow > len)							// making it so it won't over print boxes
+								boxPerRow = len-j;
+							printTop(boxPerRow, width);						// printing top of structure
+							printContent(std::span{content}, j, boxPerRow, width);		// printing content of struct
+							printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
+							std::cout<<std::endl;
+						}
+					}
+					else
+						std::cout<<"Vector is empty! Garbage data may follow!"<<std::endl;
 				}
-
-
 	};
-
-
 }
 
 #endif // SIMPLICITY_H_INCLUDED
