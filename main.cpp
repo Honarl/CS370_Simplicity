@@ -44,11 +44,11 @@ int main (void){
 */	//simplicity::simple::windowSize();
 	
 	std::vector<int> testVect{156,654,651,321,3217,7924,3114984,6513214,651749584,14023549};
-	simplicity::simple::printVector(testVect);
+	simplicity::simple::vectorToFile(testVect);
 	std::array<char,10> testC = {'s','c','p','d','s','x','z','b','r','q'};
-	simplicity::simple::printArray(testC);
+	simplicity::simple::arrayToFile(testC);
 	bool x[] = {0,1,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1};
-	simplicity::simple::printArray(x);
+	simplicity::simple::arrayToFile(x);
 
 
     return EXIT_SUCCESS;

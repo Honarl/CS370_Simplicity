@@ -228,8 +228,36 @@ namespace simplicity{
 				    }
 				    else{
                         std::cout<<"Looks like your array is empty! That file would be nothing!";
+				    }			
+				}
+				
+				template<typename T, std::size_t length>
+				static void arrayToFile(std::array<T,length>&content){
+					if(!content.empty()){
+                        std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
+                        auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+                        std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+                        printArray(content);					// filling file buffer with data from function call
+                        std::cout.rdbuf(cout_buff);						// returning control to cout
 				    }
+				    else{
+                        std::cout<<"Looks like your array is empty! That file would be nothing!";
+				    }
+				}
 
+				template <typename T>
+				static void vectorToFile(std::vector<T>&content){
+					int len = content.size();
+					if(len > 0){
+                        std::ofstream ofs{"SimplicityVectorOutput.txt"};	// declaring output file
+                        auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+                        std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+                        printVector(content);							// filling file buffer with data from function call
+                        std::cout.rdbuf(cout_buff);						// returning control to cout
+				    }
+				    else{
+                        std::cout<<"Looks like your vector is empty! That file would be nothing!";
+				    }
 				}
 
 				template <typename T>
@@ -245,7 +273,6 @@ namespace simplicity{
 				    else{
                         std::cout<<"Looks like your queue is empty! That file would be nothing!";
 				    }
-
 				}
 
 				template <typename T>
