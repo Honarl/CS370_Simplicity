@@ -96,7 +96,7 @@ namespace simplicity{
 						std::cout<<std::endl;                       // Next item
 					}
 				}
-				
+
 				template <typename T, std::size_t length>			// overload for printing from span
 				static void printContent(std::span<T,length> content, int start, int len, int width){
 					rogueutil::setColor(2);							// setting color to green
@@ -199,7 +199,7 @@ namespace simplicity{
 					}
 					return widest;
 				}
-				
+
 				template <typename T, std::size_t length>
 				static int widestMember(std::span<T, length>content, int len){
 					int widest = 1;							// Setting current widest to minimum of one
@@ -228,9 +228,9 @@ namespace simplicity{
 				    }
 				    else{
                         std::cout<<"Looks like your array is empty! That file would be nothing!";
-				    }			
+				    }
 				}
-				
+
 				template<typename T, std::size_t length>
 				static void arrayToFile(std::array<T,length>&content){
 					if(!content.empty()){
@@ -290,32 +290,32 @@ namespace simplicity{
                         std::cout<<"Looks like your stack is empty! That file would be nothing!";
                     }
                 }
-				
+
 				template<typename T, std::size_t length>
-				static void printArray(std::array<T,length>&content){				// overload for Array stl container
+				static void printArray(std::array<T,length>&content){		            // overload for Array stl container
 					int len = content.size();
 					if(len > 0){
 						std::cout<<"Printing Array"<<std::endl;
-						int width = widestMember(std::span{content}, len);	// finding the width to print
-						int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
-						int rowTotalWidth = (width+3) * len;				// finding total length of struct in chars
-						while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
+						int width = widestMember(std::span{content}, len);	            // finding the width to print
+						int windowWidth = rogueutil::tcols();				            // determining width of screen window code is run in
+						int rowTotalWidth = (width+3) * len;				            // finding total length of struct in chars
+						while(rowTotalWidth > windowWidth){					            // calculating how many chars the top row can be based on window size
 							rowTotalWidth -= (width +4);
 						}
-						int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
+						int boxPerRow = rowTotalWidth/(width+3);			            // figuring out how many boxes can be printed in each line
 						for(int j = 0; j < len; j += boxPerRow){
-							if(j + boxPerRow > len)							// making it so it won't over print boxes
+							if(j + boxPerRow > len)							            // making it so it won't over print boxes
 								boxPerRow = len-j;
-							printTop(boxPerRow, width);						// printing top of structure
+							printTop(boxPerRow, width);						            // printing top of structure
 							printContent(std::span{content}, j, boxPerRow, width);		// printing content of struct
-							printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
+							printBottom(j, boxPerRow, width);				            // printing bottom of struct and indexs
 							std::cout<<std::endl;
 						}
 					}
 					else
 						std::cout<<"Your array is empty! Nothing to print.";
 				}
-				
+
 				template <typename T>
 				static void printArray(T &content){
 					int length = sizeof(content)/sizeof(content[0]);
@@ -384,7 +384,7 @@ namespace simplicity{
                         std::cout<<"Your stack is empty! Garbage data may follow!";
 				    }
 				}
-				
+
 				template<typename T>
 				static void printVector(std::vector<T>&content){					// overload for vectors
 					int len = content.size();
