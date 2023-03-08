@@ -43,12 +43,12 @@ int main (void){
 
 */	//simplicity::simple::windowSize();
 	
-	std::vector<int> testVect{156,654,651,321,3217,7924,3114984,6513214,651749584,14023549};
-	simplicity::simple::vectorToFile(testVect);
-	std::array<char,10> testC = {'s','c','p','d','s','x','z','b','r','q'};
-	simplicity::simple::arrayToFile(testC);
-	bool x[] = {0,1,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1};
-	simplicity::simple::arrayToFile(x);
+//	std::vector<int> testVect{156,654,651,321,3217,7924,3114984,6513214,651749584,14023549};
+//	simplicity::vectorToFile(testVect);
+//	std::array<char,10> testC = {'s','c','p','d','s','x','z','b','r','q'};
+//	simplicity::arrayToFile(testC);
+	int x[] = {00,10,00,01,01,01,00,00,00,00,00,00,00,00,1,1,1};
+	simplicity::arrayToFile(x);
 
 
     return EXIT_SUCCESS;

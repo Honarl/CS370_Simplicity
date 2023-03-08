@@ -136,19 +136,18 @@ namespace simplicity{
 			int halfway = 0;								// initializing to zero
 			if((width+2) % 2 == 0){							// checking if member takes up an even number of spaces
 				halfway = (width / 2);						// setting midpoint
-				std::cout<<" "<<std::setw(halfway)<<" "<<i;	// printing index with appropiate whitespace
 				if(i >= 10)									// to account for double digit numbers
 					halfway -= 1;
+				std::cout<<" "<<std::setw(halfway)<<" "<<i;	// printing index with appropiate whitespace
 				for(int j = 0; j < halfway; j++)			// loop to finish printing out whitespace
 					std::cout<<" ";
 			}
 			else{											// widest data must take up an odd number of spaces
 				halfway = (width / 2) + 1 ; 				// setting halfway point and rounding up
 				std::cout<<" "<<std::setw(halfway)<<i;		// printing whitespace and index
-				//if(i >= 10)									// to account for double digit numbers
-				//	halfway = 1;
 				for(int j = 0; j < halfway; j++)			// loop to finish printing whitespace
 					std::cout<<" ";
+				
 			}
 		}
 		rogueutil::setColor(15);							// setting back to original color
