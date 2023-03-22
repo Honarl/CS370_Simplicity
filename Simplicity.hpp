@@ -14,6 +14,17 @@
 #include <span>
 
 namespace simplicity{
+	
+	bool fromFileCall = 0;
+	
+	void setFileCall(bool x){
+		fromFileCall = x;
+	}
+	
+	bool checkFileCall(){
+		return fromFileCall;
+	}
+
 	void clearScreen(void){
 		rogueutil::cls();
 	}
@@ -23,7 +34,8 @@ namespace simplicity{
 	}
 	
 	void printTop(int rowWidth, int width){
-		rogueutil::setColor(2);						// setting color to green
+		if(!checkFileCall())
+			rogueutil::setColor(2);					// setting color to green
 		std::cout<<"+";								// printing leftmost corner
 		for(int j = 0; j < rowWidth; j++){			// loop to end current member box
 			for(int i = 0; i < (width + 2); i++){	// loop to print width
@@ -32,21 +44,26 @@ namespace simplicity{
 			std::cout<<"+";
 		}
 		std::cout<<std::endl;						// ending top structure
-		rogueutil::setColor(15);					// setting back to original color
+		if(!checkFileCall())
+			rogueutil::setColor(15);					// setting back to original color
 	}
 
 	template <typename T>
 	void printContent(T content[], int start, int length, int width){
-		rogueutil::setColor(2);							// setting color to green
+		if(!checkFileCall())
+			rogueutil::setColor(2);							// setting color to green
 		std::cout<<"|";									// Leftmost member box
-		rogueutil::setColor(15);						// setting back to original color
+		if(!checkFileCall())	
+			rogueutil::setColor(15);						// setting back to original color
 		int end = start + length;
 		for(int i = start; i < end; i++){				// loop to print whitespace and member
 			std::cout<<" "<<std::setw(width);
 			std::cout<<content[i];
-			rogueutil::setColor(2);						// setting color to green
+			if(!checkFileCall())
+				rogueutil::setColor(2);						// setting color to green
 			std::cout<<" |";
-			rogueutil::setColor(15);					// setting back to original color
+			if(!checkFileCall())
+				rogueutil::setColor(15);					// setting back to original color
 		}
 		std::cout<<std::endl;							// ending content line
 	}
@@ -55,9 +72,11 @@ namespace simplicity{
 	void printContent(std::queue<T> &content, int start, int length, int width){
 		std::queue<T> temp;                             // Making a new queue and cloning the input one
 		temp = content;                                 // Otherwise we can't iterate without deleting it
-		rogueutil::setColor(2);							// setting color to green
+		if(!checkFileCall())
+			rogueutil::setColor(2);							// setting color to green
 		std::cout<<"|";									// Leftmost member box
-		rogueutil::setColor(15);						// setting back to original color
+		if(!checkFileCall())
+			rogueutil::setColor(15);						// setting back to original color
 		if(start != 0){									// making so the queue start matches the correct location for what has and hasnt been printed
 			for(int i = 0; i < start; i++)
 				temp.pop();
@@ -65,9 +84,11 @@ namespace simplicity{
 		for(int i = 0; i < length; i++){				// loop to print whitespace and member
 			std::cout<<" "<<std::setw(width);
 			std::cout<<temp.front();
-			rogueutil::setColor(2);						// setting color to green
+			if(!checkFileCall())
+				rogueutil::setColor(2);						// setting color to green
 			std::cout<<" |";
-			rogueutil::setColor(15);					// setting back to original color
+			if(!checkFileCall())
+				rogueutil::setColor(15);					// setting back to original color
 			temp.pop();                                 // Move to the next item in the new queue
 		}
 		std::cout<<std::endl;							// ending content line
@@ -85,11 +106,14 @@ namespace simplicity{
 		std::cout<<"+";                                 // Formatting for top line done
 		std::cout<<std::endl;
 		for(int i = 0; i < length; i++){				// loop to print whitespace and member
-			rogueutil::setColor(2);						// setting color to green
+			if(!checkFileCall())
+				rogueutil::setColor(2);						// setting color to green
 			std::cout<<"| "<<std::setw(width);
-			rogueutil::setColor(15);					// setting back to original color
+			if(!checkFileCall())
+				rogueutil::setColor(15);					// setting back to original color
 			std::cout<<temp.top();
-			rogueutil::setColor(2);						// setting color to green
+			if(!checkFileCall())
+				rogueutil::setColor(2);						// setting color to green
 			std::cout<<" | "<<i;
 			temp.pop();                                 // Move to the next item in the new stack
 			std::cout<<std::endl;						// Next line for next item
@@ -98,30 +122,36 @@ namespace simplicity{
 				std::cout<<"-";
 		}
 			std::cout<<"+";                             // End box formatting
-			rogueutil::setColor(15);					// setting back to original color
+			if(!checkFileCall())
+				rogueutil::setColor(15);					// setting back to original color
 			std::cout<<std::endl;                       // Next item
 		}
 	}
 
 	template <typename T, std::size_t length>			// overload for printing for spans
 	void printContent(std::span<T,length> content, int start, int len, int width){
-		rogueutil::setColor(2);							// setting color to green
+		if(!checkFileCall())
+			rogueutil::setColor(2);							// setting color to green
 		std::cout<<"|";									// Leftmost member box
-		rogueutil::setColor(15);						// setting back to original color
+		if(!checkFileCall())
+			rogueutil::setColor(15);						// setting back to original color
 		int end = start + len;
 		for(int i = start; i < end; i++){				// loop to print whitespace and member
 			std::cout<<" "<<std::setw(width);
 			std::cout<<content[i];
-			rogueutil::setColor(2);						// setting color to green
+			if(!checkFileCall())
+				rogueutil::setColor(2);						// setting color to green
 			std::cout<<" |";
-			rogueutil::setColor(15);					// setting back to original color
+			if(!checkFileCall())
+				rogueutil::setColor(15);					// setting back to original color
 		}
 		std::cout<<std::endl;							// ending content line
 	}
 
 	void printBottom(int start, int printWidth, int width){
 		int end = start + printWidth;
-		rogueutil::setColor(2);								// setting color to green
+		if(!checkFileCall())
+			rogueutil::setColor(2);								// setting color to green
 		std::cout<<"+";										// ending leftmost corner
 		for(int j = 0; j < printWidth; j++){ 				// loop to print corner marker
 			for(int i = 0; i < (width + 2); i++){			// loop to print bottom line
@@ -150,7 +180,8 @@ namespace simplicity{
 				
 			}
 		}
-		rogueutil::setColor(15);							// setting back to original color
+		if(!checkFileCall())
+			rogueutil::setColor(15);							// setting back to original color
 		std::cout<<std::endl;								// end index line
 	}
 
@@ -220,8 +251,6 @@ namespace simplicity{
 		return widest;
 	}
 
-	bool fromFileCall = 0;
-
 	template<typename T, std::size_t length>
 	void printArray(std::array<T,length>&content){		        		// overload for Array STL container
 		clearScreen();
@@ -243,8 +272,8 @@ namespace simplicity{
 				printBottom(j, boxPerRow, width);				        // printing bottom of struct and indexs
 				std::cout<<std::endl;
 			}
-			if(fromFileCall){
-				fromFileCall = 0;
+			if(checkFileCall()){
+				setFileCall(0);
 			}
 			else{
 				std::cout<<"Press any key to continue..."<<std::endl;
@@ -276,8 +305,8 @@ namespace simplicity{
 				printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
 				std::cout<<std::endl;
 			}
-			if(fromFileCall){
-				fromFileCall = 0;
+			if(checkFileCall()){
+				setFileCall(0);
 			}
 			else{
 				std::cout<<"Press any key to continue..."<<std::endl;
@@ -313,8 +342,8 @@ namespace simplicity{
 				printBottom(j, boxPerRow, width);				// printing bottom of struct and indexs
 				std::cout<<std::endl;
 			}
-			if(fromFileCall){
-				fromFileCall = 0;
+			if(checkFileCall()){
+				setFileCall(0);
 			}
 			else{
 				std::cout<<"Press any key to continue..."<<std::endl;
@@ -335,8 +364,8 @@ namespace simplicity{
 			std::cout<<"Top: "<<content.top()<<std::endl;	// printing top element
 			int width = widestMember(content, length); 		// Find largest item in the entire stack
 			printContent(content, length, width);      		// Stack printContent() works to print the entire stack as the two are intertwined
-			if(fromFileCall){
-				fromFileCall = 0;
+			if(checkFileCall){
+				setFileCall(0);
 			}
 			else{
 				std::cout<<"Press any key to continue..."<<std::endl;
@@ -369,8 +398,8 @@ namespace simplicity{
 				printBottom(j, boxPerRow, width);						// printing bottom of struct and indexs
 				std::cout<<std::endl;
 			}
-			if(fromFileCall){
-				fromFileCall = 0;
+			if(checkFileCall()){
+				setFileCall(0);
 			}
 			else{
 				std::cout<<"Press any key to continue..."<<std::endl;
@@ -385,7 +414,7 @@ namespace simplicity{
 	void arrayToFile(T &content){
 		int length = sizeof(content)/sizeof(content[0]);	// checking structure is not empty
 		if(length > 0){
-			fromFileCall = 1;
+			setFileCall(1);
 			std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
@@ -403,7 +432,7 @@ namespace simplicity{
 	template<typename T, std::size_t length>
 	void arrayToFile(std::array<T,length>&content){			// overload for STL array
 		if(!content.empty()){
-			fromFileCall = 1;
+			setFileCall(1);
 			std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
@@ -422,7 +451,7 @@ namespace simplicity{
 	void vectorToFile(std::vector<T>&content){
 		int len = content.size();							// checking it is not empty
 		if(len > 0){
-			fromFileCall = 1;
+			setFileCall(1);
 			std::ofstream ofs{"SimplicityVectorOutput.txt"};// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
@@ -440,7 +469,7 @@ namespace simplicity{
 	template <typename T>
 	void queueToFile(std::queue<T>& content){
 		if(!content.empty()){								// checking it is not empty
-			fromFileCall = 1;
+			setFileCall(1);
 			int length = content.size();					// getting length
 			std::ofstream ofs{"SimplicityQueueOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
@@ -459,7 +488,7 @@ namespace simplicity{
 	template <typename T>
 	void stackToFile(std::stack<T>& content){
 		if(!content.empty()){								// checking it is not empty
-			fromFileCall = 1;
+			setFileCall(1);
 			int length = content.size();					// getting length
 			std::ofstream ofs{"SimplicityStackOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
