@@ -34,35 +34,35 @@ namespace simplicity{
 	}
 	
 	void printTop(int rowWidth, int width){
-		if(!checkFileCall())
-			rogueutil::setColor(2);				// setting color to green
-		std::cout<<"+";						// printing leftmost corner
+		if(!checkFileCall())	
+			rogueutil::setColor(2);					// setting color to green
+		std::cout<<"+";								// printing leftmost corner
 		for(int j = 0; j < rowWidth; j++){			// loop to end current member box
-			for(int i = 0; i < (width + 2); i++){		// loop to print width
+			for(int i = 0; i < (width + 2); i++){	// loop to print width
 				std::cout<<"-";
 			}
 			std::cout<<"+";
 		}
-		std::cout<<std::endl;					// ending top structure
+		std::cout<<std::endl;						// ending top structure
 		if(!checkFileCall())
-			rogueutil::setColor(15);			// setting back to original color
+			rogueutil::setColor(15);				// setting back to original color
 	}
 
 	template <typename T>
 	void printContent(T content[], int start, int length, int width){
-		if(!checkFileCall())
+		if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(2);				// setting color to green
-		std::cout<<"|";						// Leftmost member box
-		if(!checkFileCall())	
+		std::cout<<"|";							// Leftmost member box
+		if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(15);			// setting back to original color
 		int end = start + length;
-		for(int i = start; i < end; i++){			// loop to print whitespace and member
+		for(int i = start; i < end; i++){		// loop to print whitespace and member
 			std::cout<<" "<<std::setw(width);
 			std::cout<<content[i];
-			if(!checkFileCall())
+			if(!checkFileCall())				// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(2);			// setting color to green
 			std::cout<<" |";
-			if(!checkFileCall())
+			if(!checkFileCall())				// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(15);		// setting back to original color
 		}
 		std::cout<<std::endl;					// ending content line
@@ -70,27 +70,26 @@ namespace simplicity{
 	
 	template <typename T>
 	void printContent(std::queue<T> &content, int start, int length, int width){
-		std::queue<T> temp;                             // Making a new queue and cloning the input one
-		temp = content;                                 // Otherwise we can't iterate without deleting it
-		if(!checkFileCall())
+		std::queue<T> temp;					// Making a new queue and cloning the input one
+		temp = content;                     // Otherwise we can't iterate without deleting it
+		if(!checkFileCall())				// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(2);			// setting color to green
-		std::cout<<"|";					// Leftmost member box
-		if(!checkFileCall())
+		std::cout<<"|";						// Leftmost member box
+		if(!checkFileCall())				// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(15);		// setting back to original color
-		if(start != 0){					// making so the queue start matches the correct location
-								// for what has and hasnt been printed
+		if(start != 0){						// making so the queue start matches the correct location for what has and hasnt been printed
 			for(int i = 0; i < start; i++)
 				temp.pop();
 		}
-		for(int i = 0; i < length; i++){		// loop to print whitespace and member
+		for(int i = 0; i < length; i++){	// loop to print whitespace and member
 			std::cout<<" "<<std::setw(width);
 			std::cout<<temp.front();
-			if(!checkFileCall())
+			if(!checkFileCall())			// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(2);		// setting color to green
 			std::cout<<" |";
-			if(!checkFileCall())
+			if(!checkFileCall())			// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(15);	// setting back to original color
-			temp.pop();                             // Move to the next item in the new queue
+			temp.pop();                     // Move to the next item in the new queue
 		}
 		std::cout<<std::endl;				// ending content line
 	}
@@ -99,52 +98,52 @@ namespace simplicity{
 	void printContent(std::stack<T> &content, int length, int width){
 		std::stack<T> temp;                             // Making a new stack and cloning the input one
 		temp = content;                                 // Otherwise we can't iterate without deleting it
-		if(!checkFileCall())
-			rogueutil::setColor(2);			// setting color to green
+		if(!checkFileCall())							// checking to avoid ANSI esc characters in txt file
+			rogueutil::setColor(2);						// setting color to green
 		std::cout<<"+";                                 // Formatting to match arrays and queues
 		for(int j = 0; j < (width + 2); j++){
-			std::cout<<"-";                         // Makes the boxes the same size
+			std::cout<<"-";                         	// Makes the boxes the same size
 		}
 		std::cout<<"+";                                 // Formatting for top line done
 		std::cout<<std::endl;
-		for(int i = 0; i < length; i++){		// loop to print whitespace and member
-			if(!checkFileCall())
-				rogueutil::setColor(2);		// setting color to green
+		for(int i = 0; i < length; i++){				// loop to print whitespace and member
+			if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
+				rogueutil::setColor(2);					// setting color to green
 			std::cout<<"| "<<std::setw(width);
-			if(!checkFileCall())
-				rogueutil::setColor(15);	// setting back to original color
+			if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
+				rogueutil::setColor(15);				// setting back to original color
 			std::cout<<temp.top();
-			if(!checkFileCall())
-				rogueutil::setColor(2);		// setting color to green
+			if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
+				rogueutil::setColor(2);					// setting color to green
 			std::cout<<" | "<<i;
-			temp.pop();                             // Move to the next item in the new stack
-			std::cout<<std::endl;			// Next line for next item
-			std::cout<<"+";                         // Box formatting below
+			temp.pop();                            		// Move to the next item in the new stack
+			std::cout<<std::endl;						// Next line for next item
+			std::cout<<"+";                         	// Box formatting below
 			for(int j = 0; j < (width + 2); j++){
 				std::cout<<"-";
 		}
-			std::cout<<"+";                         // End box formatting
-			if(!checkFileCall())
-				rogueutil::setColor(15);	// setting back to original color
-			std::cout<<std::endl;                   // Next item
+			std::cout<<"+";                        		// End box formatting
+			if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
+				rogueutil::setColor(15);				// setting back to original color
+			std::cout<<std::endl;                   	// Next item
 		}
 	}
 
 	template <typename T, std::size_t length>			// overload for printing for spans
 	void printContent(std::span<T,length> content, int start, int len, int width){
-		if(!checkFileCall())
+		if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(2);					// setting color to green
-		std::cout<<"|";							// Leftmost member box
-		if(!checkFileCall())
+		std::cout<<"|";								// Leftmost member box
+		if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(15);				// setting back to original color
 		int end = start + len;
-		for(int i = start; i < end; i++){				// loop to print whitespace and member
+		for(int i = start; i < end; i++){			// loop to print whitespace and member
 			std::cout<<" "<<std::setw(width);
 			std::cout<<content[i];
-			if(!checkFileCall())
+			if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(2);				// setting color to green
 			std::cout<<" |";
-			if(!checkFileCall())
+			if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(15);			// setting back to original color
 		}
 		std::cout<<std::endl;						// ending content line
@@ -152,51 +151,50 @@ namespace simplicity{
 
 	void printBottom(int start, int printWidth, int width){
 		int end = start + printWidth;
-		if(!checkFileCall())
-			rogueutil::setColor(2);					// setting color to green
-		std::cout<<"+";							// ending leftmost corner
-		for(int j = 0; j < printWidth; j++){ 				// loop to print corner marker
-			for(int i = 0; i < (width + 2); i++){			// loop to print bottom line
+		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
+			rogueutil::setColor(2);								// setting color to green
+		std::cout<<"+";											// ending leftmost corner
+		for(int j = 0; j < printWidth; j++){ 					// loop to print corner marker
+			for(int i = 0; i < (width + 2); i++){				// loop to print bottom line
 				std::cout<<"-";
 			}
 			std::cout<<"+";
 		}
-		std::cout<<std::endl;						// ending bottom of structure
+		std::cout<<std::endl;									// ending bottom of structure
 
-		for(int i = start; i < end; i++){				// loop to print indexes
+		for(int i = start; i < end; i++){						// loop to print indexes
 			std::cout<<" ";
-			int halfway = 0;					// initializing to zero
-			if((width+2) % 2 == 0){					// checking if member takes up an even number of spaces
-				halfway = (width / 2);				// setting midpoint
-				if(i >= 10)					// to account for double digit numbers
+			int halfway = 0;									// initializing to zero
+			if((width+2) % 2 == 0){								// checking if member takes up an even number of spaces
+				halfway = (width / 2);							// setting midpoint
+				if(i >= 10)										// to account for double digit numbers
 					halfway -= 1;
-				std::cout<<" "<<std::setw(halfway)<<" "<<i;	// printing index with appropriate whitespace
-				for(int j = 0; j < halfway; j++)		// loop to finish printing out whitespace
+				std::cout<<" "<<std::setw(halfway)<<" "<<i;		// printing index with appropriate whitespace
+				for(int j = 0; j < halfway; j++)				// loop to finish printing out whitespace
 					std::cout<<" ";
 			}
-			else{							// widest data must take up an odd number of spaces
-				halfway = (width / 2) + 1 ; 			// setting halfway point and rounding up
-				std::cout<<" "<<std::setw(halfway)<<i;		// printing whitespace and index
-				for(int j = 0; j < halfway; j++)		// loop to finish printing whitespace
+			else{												// widest data must take up an odd number of spaces
+				halfway = (width / 2) + 1 ; 					// setting halfway point and rounding up
+				std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index
+				for(int j = 0; j < halfway; j++)				// loop to finish printing whitespace
 					std::cout<<" ";
-				
 			}
 		}
-		if(!checkFileCall())
-			rogueutil::setColor(15);				// setting back to original color
-		std::cout<<std::endl;						// end index line
+		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
+			rogueutil::setColor(15);							// setting back to original color
+		std::cout<<std::endl;									// end index line
 	}
 
 	template <typename T>
 	int widestMember(T content[], int len){
-		int widest = 1;						// Setting current widest to minimum of one
+		int widest = 1;								// Setting current widest to minimum of one
 		for(int g = 0; g < len; g++){				// looping through all members of struct
-			int width = 1;					// setting minimum width to 1
-			std::ostringstream str1;			// output string stream
-			str1 << content[g];				// sending number to output as string
+			int width = 1;							// setting minimum width to 1
+			std::ostringstream str1;				// output string stream
+			str1 << content[g];						// sending number to output as string
 			std::string content = str1.str();		// converting to string
-			width = content.length(); 			// getting length
-			if(width > widest)				// checking if current member is widest
+			width = content.length(); 				// getting length
+			if(width > widest)						// checking if current member is widest
 				widest = width;
 		}
 		return widest;
@@ -204,79 +202,78 @@ namespace simplicity{
 	
 	template <typename T> 						// Overload that adds in printContent for queue
 	int widestMember(std::queue<T> &content, int len){
-		int widest = 1;					// Setting current widest to minimum of one
-		std::queue<T> temp;                     	// Make a temporary queue
-		temp = content;                         	// Clone the input queue so we can manipulate it
-		for(int g = 0; g < len; g++){			// looping through all members of struct
-			int width = 1;				// setting minimum width to 1
-			std::ostringstream str1;		// output string stream
-			str1 << temp.front();			// sending number to output as string
-			std::string content = str1.str();	// converting to string
-			width = content.length(); 		// getting length
-			if(width > widest)			// checking if current member is widest
-				widest = width;
-			temp.pop();                         	// Move to the next item in the queue
-		}
-		return widest;
-	}
-
-	template <typename T>					// overload for finding widest member of stacks
-	int widestMember(std::stack<T> &content, int len){
-		int widest = 1;					// Setting current widest to minimum of one
-		std::stack<T> temp;                     	// Make a temporary stack
-		temp = content;                         	// Clone the input queue so we can manipulate it
-		for(int g = 0; g < len; g++){			// looping through all members of struct
-			int width = 1;				// setting minimum width to 1
-			std::ostringstream str1;		// output string stream
-			str1 << temp.top();			// sending number to output as string
-			std::string content = str1.str();	// converting to string
-			width = content.length(); 		// getting length
-			if(width > widest)			// checking if current member is widest
-				widest = width;
-			temp.pop();                         	// Move to the next item in the queue
-		}
-		return widest;
-	}
-
-	template <typename T, std::size_t length>		// overload for finding widest member of span
-	int widestMember(std::span<T, length>content, int len){
 		int widest = 1;							// Setting current widest to minimum of one
-		for(auto it = content.begin(); it != content.end(); ++it) {	// looping through all members of struct
+		std::queue<T> temp;                     // Make a temporary queue
+		temp = content;                         // Clone the input queue so we can manipulate it
+		for(int g = 0; g < len; g++){			// looping through all members of struct
 			int width = 1;						// setting minimum width to 1
-			std::ostringstream str1;				// output string stream
-			str1 << *it;						// sending number to output as string
-			std::string item = str1.str();				// converting to string
-			width = item.length(); 					// getting length
+			std::ostringstream str1;			// output string stream
+			str1 << temp.front();				// sending number to output as string
+			std::string content = str1.str();	// converting to string
+			width = content.length(); 			// getting length
 			if(width > widest)					// checking if current member is widest
+				widest = width;
+			temp.pop();                         // Move to the next item in the queue
+		}
+		return widest;
+	}
+
+	template <typename T>						// overload for finding widest member of stacks
+	int widestMember(std::stack<T> &content, int len){
+		int widest = 1;							// Setting current widest to minimum of one
+		std::stack<T> temp;                    	// Make a temporary stack
+		temp = content;                        	// Clone the input queue so we can manipulate it
+		for(int g = 0; g < len; g++){			// looping through all members of struct
+			int width = 1;						// setting minimum width to 1
+			std::ostringstream str1;			// output string stream
+			str1 << temp.top();					// sending number to output as string
+			std::string content = str1.str();	// converting to string
+			width = content.length(); 			// getting length
+			if(width > widest)					// checking if current member is widest
+				widest = width;
+			temp.pop();                         // Move to the next item in the queue
+		}
+		return widest;
+	}
+
+	template <typename T, std::size_t length>							// overload for finding widest member of span
+	int widestMember(std::span<T, length>content, int len){
+		int widest = 1;													// Setting current widest to minimum of one
+		for(auto it = content.begin(); it != content.end(); ++it) {		// looping through all members of struct
+			int width = 1;												// setting minimum width to 1
+			std::ostringstream str1;									// output string stream
+			str1 << *it;												// sending number to output as string
+			std::string item = str1.str();								// converting to string
+			width = item.length(); 										// getting length
+			if(width > widest)											// checking if current member is widest
 				widest = width;
 		}
 		return widest;
 	}
 
 	template<typename T, std::size_t length>
-	void printArray(std::array<T,length>&content){		        	// overload for Array STL container
-		if(!checkFileCall())
+	void printArray(std::array<T,length>&content){		        		// overload for Array STL container
+		if(!checkFileCall())											// checking to avoid ANSI esc characters in txt file
 			clearScreen();
-		int len = content.size();					// checking array has data, getting length
+		int len = content.size();										// checking array has data, getting length
 		if(len > 0){
 			std::cout<<"Printing Array"<<std::endl;
-			int width = widestMember(std::span{content}, len);	// finding the width to print
-			int windowWidth = rogueutil::tcols();			// determining width of screen window code is run in
-			int rowTotalWidth = (width+3) * len;			// finding total length of struct in chars
-			while(rowTotalWidth > windowWidth){			// calculating how many chars the top row can be based on 
-										// window size
+			int width = widestMember(std::span{content}, len);			// finding the width to print
+			int windowWidth = rogueutil::tcols();						// determining width of screen window code is run in
+			int rowTotalWidth = (width+3) * len;						// finding total length of struct in chars
+			while(rowTotalWidth > windowWidth){							// calculating how many chars the top row can be based on window size
 				rowTotalWidth -= (width +4);
 			}
-			int boxPerRow = rowTotalWidth/(width+3);	        // figuring out how many boxes can be printed in each line
+			int boxPerRow = rowTotalWidth/(width+3);	        		// figuring out how many boxes can be printed in each line
 			for(int j = 0; j < len; j += boxPerRow){
-				if(j + boxPerRow > len)				// making it so it won't over print boxes
+				if(j + boxPerRow > len)									// making it so it won't over print boxes
 					boxPerRow = len-j;
-				printTop(boxPerRow, width);				// printing top of structure
+				printTop(boxPerRow, width);								// printing top of structure
 				printContent(std::span{content}, j, boxPerRow, width);	// printing content of struct
-				printBottom(j, boxPerRow, width);			// printing bottom of struct and indexes
+				printBottom(j, boxPerRow, width);						// printing bottom of struct and indexes
 				std::cout<<std::endl;
 			}
-			if(checkFileCall()){
+			if(checkFileCall()){										// resetting value to false for next function call
 				setFileCall(0);
 			}
 			else{
@@ -289,28 +286,28 @@ namespace simplicity{
 	}
 
 	template <typename T>
-	void printArray(T &content){						// overload for normal array
-		if(!checkFileCall()) 
+	void printArray(T &content){								// overload for normal array
+		if(!checkFileCall()) 									// checking to avoid ANSI esc characters in txt file
 			clearScreen();
 		int length = sizeof(content)/sizeof(content[0]);		// checking it is not empty, getting length
 		if(length > 0){
 			std::cout<<"Printing Array"<<std::endl;
-			int width = widestMember(content, length);		// finding the width to print
-			int windowWidth = rogueutil::tcols();			// determining width of screen window code is run in
-			int rowTotalWidth = (width+3) * length;			// finding total length of struct in chars
-			while(rowTotalWidth > windowWidth){	// calculating how many chars the top row can be based on window size
+			int width = widestMember(content, length);			// finding the width to print
+			int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
+			int rowTotalWidth = (width+3) * length;				// finding total length of struct in chars
+			while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
 				rowTotalWidth -= (width +4);
 			}
-			int boxPerRow = rowTotalWidth/(width+3);	// figuring out how many boxes can be printed in each line
+			int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
 			for(int j = 0; j < length; j += boxPerRow){
-				if(j + boxPerRow > length)		// making it so it won't over print boxes
-					boxPerRow = length-j;
-				printTop(boxPerRow, width);				// printing top of structure
+				if(j + boxPerRow > length)						// making it so it won't over print boxes
+					boxPerRow = length-j;	
+				printTop(boxPerRow, width);						// printing top of structure
 				printContent(content, j, boxPerRow, width);		// printing content of struct
-				printBottom(j, boxPerRow, width);			// printing bottom of struct and indexes
+				printBottom(j, boxPerRow, width);				// printing bottom of struct and indexes
 				std::cout<<std::endl;
 			}
-			if(checkFileCall()){
+			if(checkFileCall()){								// resetting for next function call
 				setFileCall(0);
 			}
 			else{
@@ -326,30 +323,29 @@ namespace simplicity{
    
 	template <typename T>
 	void printQueue(std::queue<T>& content){
-		if(!checkFileCall()) 
+		if(!checkFileCall()) 									// checking to avoid ANSI esc characters in txt file
 			clearScreen();
-		if(!content.empty()){						// checking it is not empty
-			int length = content.size();				// getting number of elements
-			std::cout<<"Printing Queue"<<std::endl;				
+		if(!content.empty()){									// checking it is not empty
+			int length = content.size();						// getting number of elements
+			std::cout<<"Printing Queue"<<std::endl;					
 			std::cout<<"Front: "<<content.front()<<std::endl;	// printing first element
 			std::cout<<"Back: "<<content.back()<<std::endl;		// printing last element
-			int width = widestMember(content, length);		// finding the width to print
-			int windowWidth = rogueutil::tcols();			// determining width of screen window code is run in
-			int rowTotalWidth = (width+3) * length;			// finding total length of struct in chars
-			while(rowTotalWidth > windowWidth){			// calculating how many chars the top row can be based on
-										// window size
-				rowTotalWidth -= (width +4);
+			int width = widestMember(content, length);			// finding the width to print
+			int windowWidth = rogueutil::tcols();				// determining width of screen window code is run in
+			int rowTotalWidth = (width+3) * length;				// finding total length of struct in chars
+			while(rowTotalWidth > windowWidth){					// calculating how many chars the top row can be based on window size
+				rowTotalWidth -= (width + 4);
 			}
-			int boxPerRow = rowTotalWidth/(width+3);		// figuring out how many boxes can be printed in each line
+			int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
 			for(int j = 0; j < length; j += boxPerRow){
-				if(j + boxPerRow > length)			// making it so it won't over print boxes
+				if(j + boxPerRow > length)						// making it so it won't over print boxes
 					boxPerRow = length-j;
-				printTop(boxPerRow, width);			// printing top of structure
-				printContent(content, j, boxPerRow, width);	// printing content of struct
-				printBottom(j, boxPerRow, width);		// printing bottom of struct and indexes
+				printTop(boxPerRow, width);						// printing top of structure
+				printContent(content, j, boxPerRow, width);		// printing content of struct
+				printBottom(j, boxPerRow, width);				// printing bottom of struct and indexes
 				std::cout<<std::endl;
 			}
-			if(checkFileCall()){
+			if(checkFileCall()){								// resetting for next function call
 				setFileCall(0);
 			}
 			else{
@@ -364,16 +360,15 @@ namespace simplicity{
 
 	template <typename T>
 	void printStack(std::stack<T>& content){				// Print stacks vertically
-		if(!checkFileCall()) 
+		if(!checkFileCall()) 								// checking to avoid ANSI esc characters in txt file
 			clearScreen();
-		if(!content.empty()){						// checking not empty
-			int length = content.size();				// getting number of elements
+		if(!content.empty()){								// checking not empty
+			int length = content.size();					// getting number of elements
 			std::cout<<"Printing Stack"<<std::endl;
-			std::cout<<"Top: "<<content.top()<<std::endl;		// printing top element
+			std::cout<<"Top: "<<content.top()<<std::endl;	// printing top element
 			int width = widestMember(content, length); 		// Find largest item in the entire stack
-			printContent(content, length, width);     		// Stack printContent() works to print the entire stack
-										// as the two are intertwined
-			if(checkFileCall()){
+			printContent(content, length, width);     		// Stack printContent() works to print the entire stack as the two are intertwined
+			if(checkFileCall()){							// resetting for next function call
 				setFileCall(0);
 			}
 			else{
@@ -387,29 +382,28 @@ namespace simplicity{
 	}
 
 	template<typename T>
-	void printVector(std::vector<T>&content){				// overload for vectors
-		if(!checkFileCall()) 
+	void printVector(std::vector<T>&content){							// overload for vectors
+		if(!checkFileCall()) 											// checking to avoid ANSI esc characters in txt file
 			clearScreen();
-		int len = content.size();					// getting number of members
-		if(len > 0){							// verifying it is not empty
+		int len = content.size();										// getting number of members
+		if(len > 0){													// verifying it is not empty
 			std::cout<<"Printing Vector"<<std::endl;
-			int width = widestMember(std::span{content}, len);	// finding the width to print
-			int windowWidth = rogueutil::tcols();			// determining width of screen window code is run in
-			int rowTotalWidth = (width+3) * len;			// finding total length of struct in chars
-			while(rowTotalWidth > windowWidth){			// calculating how many chars the top row can be based
-										// on window size
-				rowTotalWidth -= (width +4);
+			int width = widestMember(std::span{content}, len);			// finding the width to print
+			int windowWidth = rogueutil::tcols();						// determining width of screen window code is run in
+			int rowTotalWidth = (width+3) * len;						// finding total length of struct in chars
+			while(rowTotalWidth > windowWidth){							// calculating how many chars the top row can be based on window size
+				rowTotalWidth -= (width +4);	
 			}
-			int boxPerRow = rowTotalWidth/(width+3);		// figuring out how many boxes can be printed in each line
+			int boxPerRow = rowTotalWidth/(width+3);					// figuring out how many boxes can be printed in each line
 			for(int j = 0; j < len; j += boxPerRow){
-				if(j + boxPerRow > len)				// making it so it won't over print boxes
+				if(j + boxPerRow > len)									// making it so it won't over print boxes
 					boxPerRow = len-j;
-				printTop(boxPerRow, width);			// printing top of structure
+				printTop(boxPerRow, width);								// printing top of structure
 				printContent(std::span{content}, j, boxPerRow, width);	// printing content of struct
-				printBottom(j, boxPerRow, width);			// printing bottom of struct and indexs
-				std::cout<<std::endl;
+				printBottom(j, boxPerRow, width);						// printing bottom of struct and indexs
+				std::cout<<std::endl;	
 			}
-			if(checkFileCall()){
+			if(checkFileCall()){										// resetting for next function call
 				setFileCall(0);
 			}
 			else{
@@ -425,12 +419,12 @@ namespace simplicity{
 	void arrayToFile(T &content){
 		int length = sizeof(content)/sizeof(content[0]);		// checking structure is not empty
 		if(length > 0){
-			setFileCall(1);
+			setFileCall(1);										// setting true
 			std::ofstream ofs{"SimplicityArrayOutput.txt"};		// declaring output file
-			auto cout_buff = std::cout.rdbuf();			// saves pointer to output buffer
-			std::cout.rdbuf(ofs.rdbuf());				// substitute internal buffer with file buffer
-			printArray(content);					// filling file buffer with data from function call
-			std::cout.rdbuf(cout_buff);				// returning control to cout
+			auto cout_buff = std::cout.rdbuf();					// saves pointer to output buffer
+			std::cout.rdbuf(ofs.rdbuf());						// substitute internal buffer with file buffer
+			printArray(content);								// filling file buffer with data from function call
+			std::cout.rdbuf(cout_buff);							// returning control to cout
 			std::cout<<"SimplicityArrayOutput.txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
@@ -443,12 +437,12 @@ namespace simplicity{
 	template<typename T, std::size_t length>
 	void arrayToFile(std::array<T,length>&content){			// overload for STL array
 		if(!content.empty()){
-			setFileCall(1);
+			setFileCall(1);									// setting true
 			std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
-			auto cout_buff = std::cout.rdbuf();		// saves pointer to output buffer
-			std::cout.rdbuf(ofs.rdbuf());			// substitute internal buffer with file buffer
-			printArray(content);				// filling file buffer with data from function call
-			std::cout.rdbuf(cout_buff);			// returning control to cout
+			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
+			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
+			printArray(content);							// filling file buffer with data from function call
+			std::cout.rdbuf(cout_buff);						// returning control to cout
 			std::cout<<"SimplicityArrayOutput.txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
@@ -460,14 +454,14 @@ namespace simplicity{
 
 	template <typename T>
 	void vectorToFile(std::vector<T>&content){
-		int len = content.size();						// checking it is not empty
+		int len = content.size();								// checking it is not empty
 		if(len > 0){
-			setFileCall(1);
-			std::ofstream ofs{"SimplicityVectorOutput.txt"};		// declaring output file
-			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
-			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
-			printVector(content);						// filling file buffer with data from function call
-			std::cout.rdbuf(cout_buff);					// returning control to cout
+			setFileCall(1);										// setting true
+			std::ofstream ofs{"SimplicityVectorOutput.txt"};	// declaring output file
+			auto cout_buff = std::cout.rdbuf();					// saves pointer to output buffer
+			std::cout.rdbuf(ofs.rdbuf());						// substitute internal buffer with file buffer
+			printVector(content);								// filling file buffer with data from function call
+			std::cout.rdbuf(cout_buff);							// returning control to cout
 			std::cout<<"SimplicityVectorOutput.txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
@@ -479,14 +473,14 @@ namespace simplicity{
 
 	template <typename T>
 	void queueToFile(std::queue<T>& content){
-		if(!content.empty()){							// checking it is not empty
-			setFileCall(1);
+		if(!content.empty()){								// checking it is not empty
+			setFileCall(1);									// setting true
 			int length = content.size();					// getting length
-			std::ofstream ofs{"SimplicityQueueOutput.txt"};			// declaring output file
+			std::ofstream ofs{"SimplicityQueueOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
 			printQueue(content, length);					// filling file buffer with data from function call
-			std::cout.rdbuf(cout_buff);					// returning control to cout
+			std::cout.rdbuf(cout_buff);						// returning control to cout
 			std::cout<<"SimplicityQueueOutput.txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
@@ -498,14 +492,14 @@ namespace simplicity{
 
 	template <typename T>
 	void stackToFile(std::stack<T>& content){
-		if(!content.empty()){							// checking it is not empty
-			setFileCall(1);
+		if(!content.empty()){								// checking it is not empty
+			setFileCall(1);									// setting true
 			int length = content.size();					// getting length
-			std::ofstream ofs{"SimplicityStackOutput.txt"};			// declaring output file
+			std::ofstream ofs{"SimplicityStackOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
 			printStack(content, length);					// filling file buffer with data from function call
-			std::cout.rdbuf(cout_buff);					// returning control to cout
+			std::cout.rdbuf(cout_buff);						// returning control to cout
 			std::cout<<"SimplicityStackOutput.txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
