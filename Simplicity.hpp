@@ -14,13 +14,13 @@
 #include <span>
 
 namespace simplicity{
-	
+
 	bool fromFileCall = 0;
-	
+
 	void setFileCall(bool x){
 		fromFileCall = x;
 	}
-	
+
 	bool checkFileCall(){
 		return fromFileCall;
 	}
@@ -28,13 +28,13 @@ namespace simplicity{
 	void clearScreen(void){
 		rogueutil::cls();
 	}
-	
+
 	void wait(void){
 		rogueutil::anykey();
 	}
-	
+
 	void printTop(int rowWidth, int width){
-		if(!checkFileCall())	
+		if(!checkFileCall())
 			rogueutil::setColor(2);					// setting color to green
 		std::cout<<"+";								// printing leftmost corner
 		for(int j = 0; j < rowWidth; j++){			// loop to end current member box
@@ -67,7 +67,7 @@ namespace simplicity{
 		}
 		std::cout<<std::endl;					// ending content line
 	}
-	
+
 	template <typename T>
 	void printContent(std::queue<T> &content, int start, int length, int width){
 		std::queue<T> temp;					// Making a new queue and cloning the input one
@@ -93,7 +93,7 @@ namespace simplicity{
 		}
 		std::cout<<std::endl;				// ending content line
 	}
-	
+
 	template <typename T>					// Printing for stacks
 	void printContent(std::stack<T> &content, int length, int width){
 		std::stack<T> temp;                             // Making a new stack and cloning the input one
@@ -199,7 +199,7 @@ namespace simplicity{
 		}
 		return widest;
 	}
-	
+
 	template <typename T> 						// Overload that adds in printContent for queue
 	int widestMember(std::queue<T> &content, int len){
 		int widest = 1;							// Setting current widest to minimum of one
@@ -301,7 +301,7 @@ namespace simplicity{
 			int boxPerRow = rowTotalWidth/(width+3);			// figuring out how many boxes can be printed in each line
 			for(int j = 0; j < length; j += boxPerRow){
 				if(j + boxPerRow > length)						// making it so it won't over print boxes
-					boxPerRow = length-j;	
+					boxPerRow = length-j;
 				printTop(boxPerRow, width);						// printing top of structure
 				printContent(content, j, boxPerRow, width);		// printing content of struct
 				printBottom(j, boxPerRow, width);				// printing bottom of struct and indexes
@@ -320,14 +320,14 @@ namespace simplicity{
 		}
 
 	}
-   
+
 	template <typename T>
 	void printQueue(std::queue<T>& content){
 		if(!checkFileCall()) 									// checking to avoid ANSI esc characters in txt file
 			clearScreen();
 		if(!content.empty()){									// checking it is not empty
 			int length = content.size();						// getting number of elements
-			std::cout<<"Printing Queue"<<std::endl;					
+			std::cout<<"Printing Queue"<<std::endl;
 			std::cout<<"Front: "<<content.front()<<std::endl;	// printing first element
 			std::cout<<"Back: "<<content.back()<<std::endl;		// printing last element
 			int width = widestMember(content, length);			// finding the width to print
@@ -392,7 +392,7 @@ namespace simplicity{
 			int windowWidth = rogueutil::tcols();						// determining width of screen window code is run in
 			int rowTotalWidth = (width+3) * len;						// finding total length of struct in chars
 			while(rowTotalWidth > windowWidth){							// calculating how many chars the top row can be based on window size
-				rowTotalWidth -= (width +4);	
+				rowTotalWidth -= (width +4);
 			}
 			int boxPerRow = rowTotalWidth/(width+3);					// figuring out how many boxes can be printed in each line
 			for(int j = 0; j < len; j += boxPerRow){
@@ -401,7 +401,7 @@ namespace simplicity{
 				printTop(boxPerRow, width);								// printing top of structure
 				printContent(std::span{content}, j, boxPerRow, width);	// printing content of struct
 				printBottom(j, boxPerRow, width);						// printing bottom of struct and indexs
-				std::cout<<std::endl;	
+				std::cout<<std::endl;
 			}
 			if(checkFileCall()){										// resetting for next function call
 				setFileCall(0);
@@ -414,7 +414,52 @@ namespace simplicity{
 		else
 			std::cout<<"Vector is empty! Garbage data may follow!"<<std::endl;
 	}
-	
+
+	template<typename T>
+	void print2DArray(T &content){
+	    int rowNum = 0;
+	    if(!checkFileCall())
+            clearScreen();
+        int length = sizeof(content)/sizeof(content[0][0]);
+        if (length > 0){
+            std::cout<<"Printing 2D array"<<std::endl;
+            //TODO: Add a 2D array widestMember
+            int width = widestMember(content, length);
+            //END TODO
+            int windowWidth = rogueutil::tcols();
+            int rowTotalWidth = (width+3) * length;
+            while (rowTotalWidth > windowWidth){
+                rowTotalWidth -= (width+4);
+            }
+            int boxPerRow = rowTotalWidth/(width+3);
+            std::cout<<"  ";                                        //Print two spaces beforehand so that the boxes will line up with row numbers added
+            printTop(boxPerRow, width);
+            for (int j = 0; j < length; j += boxPerRow){
+                if(j + boxPerRow > length)
+                    boxPerRow = length - j;
+                std::cout<<rowNum<<" ";                             //Print the row number and then add a space in order to make it not look garbage
+                //TODO: Overload printContent for a row check
+                printContent(content, j, boxPerRow, width, rowNum);
+                //END TODO
+                std::cout<<"  ";
+                printTop(boxPerRow, width);
+                std::cout<<std::endl;
+                rowNum++;
+            }
+            printBottom(j, boxPerRow, width);
+            if(checkFileCall){
+               setFileCall(0);
+            }
+            else{
+                std::cout<<"Press any key to continue...";<<std::endl;
+                wait();
+            }
+        }
+        else{
+            std::cout<<"Your array is empty! Nothing to print!";
+        }
+	}
+
 	template<typename T>
 	void arrayToFile(T &content){
 		int length = sizeof(content)/sizeof(content[0]);		// checking structure is not empty
