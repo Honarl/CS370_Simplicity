@@ -35,20 +35,37 @@ int main (void){
 
 
 	simplicity::simple::printArray(content);
-	simplicity::simple::arrayToFile(content);	
+	simplicity::simple::arrayToFile(content);
 //	simplicity::simple::printQueue(testQueue);
 //	simplicity::simple::queueToFile(testQueue);
 //	simplicity::simple::printStack(testStack);
 //	simplicity::simple::stackToFile(testStack);
 
 */	//simplicity::simple::windowSize();
-	
+
 //	std::vector<int> testVect{156,654,651,321,3217,7924,3114984,6513214,651749584,14023549};
 //	simplicity::vectorToFile(testVect);
 //	std::array<char,10> testC = {'s','c','p','d','s','x','z','b','r','q'};
 //	simplicity::arrayToFile(testC);
-	int x[] = {00,10,00,01,01,01,00,00,00,00,00,00,00,00,1,1,1};
-	simplicity::arrayToFile(x);
+//	int x[] = {00,10,00,01,01,01,00,00,00,00,00,00,00,00,1,1,1};
+//	simplicity::arrayToFile(x);
+
+    int test2D[2][3];
+
+    test2D[0][0] = 10;
+    test2D[0][1] = 11;
+    test2D[0][2] = 12;
+    test2D[0][3] = 13;
+    test2D[1][0] = 14;
+    test2D[1][1] = 15;
+    test2D[1][2] = 16;
+    test2D[1][3] = 17;
+    test2D[2][0] = 18;
+    test2D[2][1] = 19;
+    test2D[2][2] = 20;
+    test2D[2][3] = 21;
+
+    simplicity::print2DArray(test2D);
 
 
     return EXIT_SUCCESS;

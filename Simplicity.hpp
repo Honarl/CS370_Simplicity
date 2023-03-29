@@ -150,6 +150,26 @@ namespace simplicity{
 		std::cout<<std::endl;						// ending content line
 	}
 
+	template <typename T>
+	void printContent(T content[][3], int start, int len, int width, int rowNum){
+	if(!checkFileCall())
+        rogueutil::setColor(2);
+    std::cout<<"|";
+    if(!checkFileCall())
+        rogueutil::setColor(15);
+    int end = start + len;
+    for (int i = start; i < end; i++){
+        std::cout<<" "<<std::setw(width);
+        std::cout<<content[i][rowNum];
+        if(!checkFileCall())
+            rogueutil::setColor(2);
+        std::cout<<" |";
+        if(!checkFileCall())
+            rogueutil::setColor(15);
+    }
+    std::cout<<std::endl;
+	}
+
 	void printBottom(int start, int printWidth, int width){
 		int end = start + printWidth;
 		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
@@ -185,7 +205,7 @@ namespace simplicity{
 			rogueutil::setColor(15);							// setting back to original color
 		std::cout<<std::endl;									// end index line
 	}
-	
+
 	template <typename T>
 	int widestMember(std::list<T> &content, int len){
 		int widest = 1;								// Setting current widest to minimum of one
@@ -198,7 +218,7 @@ namespace simplicity{
 			width = content.length(); 				// getting length
 			if(width > widest)						// checking if current member is widest
 				widest = width;
-			temp.pop_front();	
+			temp.pop_front();
 		}
 		return widest;
 	}
@@ -268,7 +288,7 @@ namespace simplicity{
 		}
 		return widest;
 	}
-	
+
 	template <typename T>
 	void printLinkedList(std::list<T> &content){
 		if(!content.empty()){										// verifying that there is stuff to be printed
@@ -280,7 +300,7 @@ namespace simplicity{
 				outer += "-";
 			outer += "+";											// top right
 			for(int i = 0; i < 5; i++)								// spaces to account for arrow between boxes
-				outer += " ";		
+				outer += " ";
 			std::ofstream ofs{"SimplicityLinkedListOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
@@ -292,7 +312,7 @@ namespace simplicity{
 			}
 			std::cout<<std::endl;									// ending content line
 			for(int i = 0; i < boxes; i++)							// printing bottom of boxes
-				std::cout<<outer;	
+				std::cout<<outer;
 			std::cout<<std::endl;									// ending bottom line
 			std::cout.rdbuf(cout_buff);								// returning control to cout
 			std::cout<<"SimplicityLinkedListOutput.txt has been created!"<<std::endl;
@@ -469,7 +489,7 @@ namespace simplicity{
 	}
 
 	template<typename T>
-	void print2DArray(T &content){
+	void print2DArray(T &content){                                  //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
 	    int rowNum = 0;
 	    if(!checkFileCall())
             clearScreen();
@@ -484,9 +504,10 @@ namespace simplicity{
             while (rowTotalWidth > windowWidth){
                 rowTotalWidth -= (width+4);
             }
-            int boxPerRow = rowTotalWidth/(width+3);
+            int boxPerRow = rowTotalWidth/(width+3) - 2;
             std::cout<<"  ";                                        //Print two spaces beforehand so that the boxes will line up with row numbers added
             printTop(boxPerRow, width);
+            int finalj = 0;
             for (int j = 0; j < length; j += boxPerRow){
                 if(j + boxPerRow > length)
                     boxPerRow = length - j;
@@ -496,10 +517,10 @@ namespace simplicity{
                 //END TODO
                 std::cout<<"  ";
                 printTop(boxPerRow, width);
-                std::cout<<std::endl;
                 rowNum++;
             }
-            printBottom(j, boxPerRow, width);
+            std::cout<<"  ";
+            printBottom(0, length-boxPerRow, width);
             if(checkFileCall){
                setFileCall(0);
             }
