@@ -320,7 +320,9 @@ namespace simplicity{
 			wait();
 		}
 		else{
-			std::cout<<"Linked List is empty! Nothing to show.";
+			std::cout<<"Linked List is empty! Nothing to show."<<std::endl;
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 	}
 
@@ -355,7 +357,9 @@ namespace simplicity{
 			}
 		}
 		else
-			std::cout<<"Your array is empty! Nothing to print.";
+			std::cout<<"Your array is empty! Nothing to print."<<std::endl;
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 	}
 
 	template <typename T>
@@ -389,7 +393,9 @@ namespace simplicity{
 			}
 		}
 		else{
-			std::cout<<"Your array is empty! Nothing to print.";
+			std::cout<<"Your array is empty! Nothing to print."<<std::endl;
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 
 	}
@@ -427,7 +433,9 @@ namespace simplicity{
 			}
 		}
 		else{
-			std::cout<<"Your queue is empty! Garbage data may follow!";
+			std::cout<<"Your queue is empty! Garbage data may follow!"<<std::endl;
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 	}
 
@@ -450,7 +458,9 @@ namespace simplicity{
 			}
 		}
 		else{
-			std::cout<<"Your stack is empty! Garbage data may follow!";
+			std::cout<<"Your stack is empty! Garbage data may follow!"<<std::endl;
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 	}
 
@@ -486,6 +496,7 @@ namespace simplicity{
 		}
 		else
 			std::cout<<"Vector is empty! Garbage data may follow!"<<std::endl;
+			
 	}
 
 	template<typename T>
@@ -550,6 +561,8 @@ namespace simplicity{
 		}
 		else{
 			std::cout<<"Looks like your array is empty! That file would be nothing!";
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 	}
 
@@ -568,6 +581,8 @@ namespace simplicity{
 		}
 		else{
 			std::cout<<"Looks like your array is empty! That file would be nothing!";
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 	}
 
@@ -586,7 +601,9 @@ namespace simplicity{
 			wait();
 		}
 		else{
-			std::cout<<"Looks like your vector is empty! That file would be nothing!";
+			std::cout<<"Looks like your vector is empty! That file would be nothing!"<<std::endl;
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 	}
 
@@ -606,6 +623,8 @@ namespace simplicity{
 		}
 		else{
 			std::cout<<"Looks like your queue is empty! That file would be nothing!";
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 	}
 
@@ -625,6 +644,8 @@ namespace simplicity{
 		}
 		else{
 			std::cout<<"Looks like your stack is empty! That file would be nothing!";
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
 		}
 	}
 }
