@@ -149,7 +149,7 @@ namespace simplicity{
 		}
 		std::cout<<std::endl;						// ending content line
 	}
-
+    //TODO: MASSIVE OVERHAUL
 	template <typename T>
 	void printContent(T content[][3], int start, int len, int width, int rowNum){
 	if(!checkFileCall())
@@ -496,42 +496,37 @@ namespace simplicity{
 		}
 		else
 			std::cout<<"Vector is empty! Garbage data may follow!"<<std::endl;
-			
+
 	}
 
+
+	//This guy's getting gutted and overhauled
 	template<typename T>
-	void print2DArray(T &content){                                  //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
-	    int rowNum = 0;
+	void print2DArray(T &content, int cols, int rows){                                  //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
 	    if(!checkFileCall())
             clearScreen();
+        //Size is irrelevant if we are only printing to output file
+        //And the length of each line is integral to the data structure, the following call does remain however so that we can confirm it is not empty
         int length = sizeof(content)/sizeof(content[0][0]);
         if (length > 0){
             std::cout<<"Printing 2D array"<<std::endl;
             //TODO: Add a 2D array widestMember
             int width = widestMember(content, length);
             //END TODO
-            int windowWidth = rogueutil::tcols();
-            int rowTotalWidth = (width+3) * length;
-            while (rowTotalWidth > windowWidth){
-                rowTotalWidth -= (width+4);
-            }
-            int boxPerRow = rowTotalWidth/(width+3) - 2;
             std::cout<<"  ";                                        //Print two spaces beforehand so that the boxes will line up with row numbers added
-            printTop(boxPerRow, width);
+            printTop(cols, width);
             int finalj = 0;
-            for (int j = 0; j < length; j += boxPerRow){
-                if(j + boxPerRow > length)
-                    boxPerRow = length - j;
+            for (int rowNum = 0; rowNum < rows; rowNum++){
                 std::cout<<rowNum<<" ";                             //Print the row number and then add a space in order to make it not look garbage
                 //TODO: Overload printContent for a row check
-                printContent(content, j, boxPerRow, width, rowNum);
+                printContent(content, 0, cols, width, rowNum);
                 //END TODO
                 std::cout<<"  ";
-                printTop(boxPerRow, width);
+                printTop(cols, width);
                 rowNum++;
             }
             std::cout<<"  ";
-            printBottom(0, length-boxPerRow, width);
+            printBottom(0, cols, width);
             if(checkFileCall){
                setFileCall(0);
             }

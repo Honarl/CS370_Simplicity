@@ -10,14 +10,14 @@
 #include <random>
 
 //Team Simplicity main test file
-using namespace std; 
+using namespace std;
 using namespace simplicity;
 
 int main (void){
 //  ARRAY TEST CASES
 //  Array Int
     int testIntArray[] = {};
-    printArray(testIntArray);   // should output empty data structure prompt 
+    printArray(testIntArray);   // should output empty data structure prompt
 
 //  Array Char
     char testCharArray[] = {'A','b','C','d','E','f'};
@@ -38,7 +38,7 @@ int main (void){
     testIntStack.push(5);
     testIntStack.push(6);
     testIntStack.push(7);
-    for(int i = 0; i < 7; i++) 
+    for(int i = 0; i < 7; i++)
     {
         printStack(testIntStack);
         testIntStack.pop();
@@ -54,7 +54,7 @@ int main (void){
     testCharStack.push('e');
     testCharStack.push('F');
     testCharStack.push('G');
-    printStack(testCharStack); 
+    printStack(testCharStack);
 
 //  Stack Strings
     stack<string> testStringStack;
@@ -67,7 +67,7 @@ int main (void){
     printStack(testStringStack);
  //   stackToFile(testStringStack);   // should save stack to SimplicityStackOutput.txt
 
-    
+
 // Queue Test Cases
 //  Queue Int
     queue<int> testIntQueue;
@@ -78,7 +78,7 @@ int main (void){
     testIntQueue.push(5345666);
     testIntQueue.push(6445);
     testIntQueue.push(-7);
-    for(int i = 0; i < testIntQueue.size(); i++) 
+    for(int i = 0; i < testIntQueue.size(); i++)
     {
         printQueue(testIntQueue);
         testIntQueue.pop();
@@ -157,7 +157,6 @@ int main (void){
                                 'd','f','r'};
     printLinkedList(testCharList);
 
-
 // 2D Array Test Case
     int test2D[2][3];
     test2D[0][0] = 10;
@@ -172,6 +171,6 @@ int main (void){
     test2D[2][1] = 19;
     test2D[2][2] = 20;
     test2D[2][3] = 21;
-    print2DArray(test2D);
+    print2DArray(test2D, 2, 3);
     return EXIT_SUCCESS;
 }
