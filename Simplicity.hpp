@@ -13,6 +13,7 @@
 #include <fstream>
 #include <span>
 #include <list>
+#include <forward_list>
 
 namespace simplicity{
 
@@ -222,6 +223,23 @@ namespace simplicity{
 		}
 		return widest;
 	}
+	
+	template <typename T>
+	int widestMember(std::forward_list<T> &content, int len){
+		int widest = 1;								// Setting current widest to minimum of one
+		std::forward_list<T> temp = content;
+		for(int g = 0; g < len; g++){				// looping through all members of struct
+			int width = 1;							// setting minimum width to 1
+			std::ostringstream str1;				// output string stream
+			str1 << temp.front();					// sending number to output as string
+			std::string content = str1.str();		// converting to string
+			width = content.length(); 				// getting length
+			if(width > widest)						// checking if current member is widest
+				widest = width;
+			temp.pop_front();
+		}
+		return widest;
+	}
 
 	template <typename T>
 	int widestMember(T content[], int len){
@@ -305,10 +323,51 @@ namespace simplicity{
         return widest;
 	}
 
-	template <typename T>
+template <typename T>
 	void printLinkedList(std::list<T> &content){
 		if(!content.empty()){										// verifying that there is stuff to be printed
 			int boxes = content.size();								// getting number of elements
+			int width = widestMember(content, boxes);				// figuring out box width
+			std::string outer;										// creating string for top & bottom of box
+			outer += "   +-+";										// top left corner of box
+			for(int i = 0; i < (width + 2); i++)					// top side
+				outer += "-";
+			outer += "+-+";											// top right
+			//for(int i = 0; i < 3; i++)								// spaces to account for arrow between boxes
+				//outer += " ";		
+			std::ofstream ofs{"SimplicityLinkedListOutput.txt"};	// declaring output file
+			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
+			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
+			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
+				std::cout<<outer;
+			std::cout<<std::endl<<"   ";							// ending top line
+			for(int i = 0; i < boxes; i++)
+				std::cout<<"| | "<<std::setw(width)<<" "<<" | |-->";
+			std::cout<<std::endl<<"   ";
+			for(typename std::list<T>::iterator it = content.begin(); it != content.end(); ++it){
+				std::cout<<"| | "<<std::setw(width)<<*it<<" | |   ";			// printing content
+			}
+			std::cout<<std::endl;
+			for(int i = 0; i < boxes; i++)
+				std::cout<<"<--| | "<<std::setw(width)<<" "<<" | |";	// ending content line
+			std::cout<<std::endl;
+			for(int i = 0; i < boxes; i++)							// printing bottom of boxes
+				std::cout<<outer;	
+			std::cout<<std::endl;									// ending bottom line
+			std::cout.rdbuf(cout_buff);								// returning control to cout
+			std::cout<<"SimplicityLinkedListOutput.txt has been created!"<<std::endl;
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();
+		}
+		else{
+			std::cout<<"Linked List is empty! Nothing to show.";
+		}
+	}
+	
+	template <typename T>
+	void printForwardLinkedList(std::forward_list<T> &content){
+		if(!content.empty()){										// verifying that there is stuff to be printed
+			int boxes = std::distance(content.begin(), content.end()); ;								// getting number of elements
 			int width = widestMember(content, boxes);				// figuring out box width
 			std::string outer;										// creating string for top & bottom of box
 			outer += "+";											// top left corner of box
@@ -317,13 +376,13 @@ namespace simplicity{
 			outer += "+";											// top right
 			for(int i = 0; i < 5; i++)								// spaces to account for arrow between boxes
 				outer += " ";
-			std::ofstream ofs{"SimplicityLinkedListOutput.txt"};	// declaring output file
+			std::ofstream ofs{"SimplicityForwardLinkedListOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
 			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
 				std::cout<<outer;
 			std::cout<<std::endl;									// ending top line
-			for(typename std::list<T>::iterator it = content.begin(); it != content.end(); ++it){
+			for(typename std::forward_list<T>::iterator it = content.begin(); it != content.end(); ++it){
 				std::cout<<"| "<<std::setw(width)<<*it <<" | --> ";	// printing content
 			}
 			std::cout<<std::endl;									// ending content line
@@ -331,7 +390,7 @@ namespace simplicity{
 				std::cout<<outer;
 			std::cout<<std::endl;									// ending bottom line
 			std::cout.rdbuf(cout_buff);								// returning control to cout
-			std::cout<<"SimplicityLinkedListOutput.txt has been created!"<<std::endl;
+			std::cout<<"SimplicityForwardLinkedListOutput.txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
