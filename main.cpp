@@ -169,14 +169,13 @@ int main (void){
     test2D[1][2] = 16623;
     print2DArray(test2D, 2, 3);
 
-    /*
-    char test2D[5][6] = { 'a','b','c','d','e','f',
+    char test2D2[5][6] = { 'a','b','c','d','e','f',
                           'g','h','i','j','k','l',
                           'm','n','o','p','q','r',
                           's','t','u','v','w','x',
                           'y','z','a','b','c','d'
                           };
-    simplicity::print2DArray(test2D, 5, 6);
-    */
+    simplicity::print2DArray(test2D2, 5, 6);
+
     return EXIT_SUCCESS;
 }

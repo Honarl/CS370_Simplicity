@@ -520,14 +520,16 @@ namespace simplicity{
 	void print2DArray(T &content, int cols, int rows){              //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
 	    if(!checkFileCall())
             clearScreen();
+        setFileCall(1);
+        std::ofstream ofs{"Simplicity2DArrayOutput.txt"};
+        auto cout_buff = std::cout.rdbuf();
+        std::cout.rdbuf(ofs.rdbuf());
         //Size is irrelevant if we are only printing to output file
         //And the length of each line is integral to the data structure, the following call does remain however so that we can confirm it is not empty
         int length = sizeof(content)/sizeof(content[0][0]);
         if (length > 0){
-            std::cout<<"Printing 2D array"<<std::endl;
-            //TODO: Add a 2D array widestMember
+            std::cout<<"Printing 2D array and creating output file"<<std::endl;
             int width = widestMember(content, cols, rows);
-            //END TODO
             std::cout<<"  ";                                        //Print two spaces beforehand so that the boxes will line up with row numbers added
             printTop(cols, width);
             for (int rowNum = 0; rowNum < rows; rowNum++){
@@ -538,7 +540,7 @@ namespace simplicity{
                 printTop(cols, width);
             }
             printBottom(0, cols, width);
-            if(checkFileCall){
+            if(checkFileCall()){
                setFileCall(0);
             }
             else{
@@ -549,6 +551,10 @@ namespace simplicity{
         else{
             std::cout<<"Your array is empty! Nothing to print!";
         }
+        std::cout.rdbuf(cout_buff);
+        std::cout<<"Simplicity2DArrayOutput.txt has been created!"<<std::endl;
+        std::cout<<"Press any key to continue...";
+        wait();
 	}
 
 	template<typename T>
