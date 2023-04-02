@@ -149,9 +149,9 @@ namespace simplicity{
 		}
 		std::cout<<std::endl;						// ending content line
 	}
-    //TODO: MASSIVE OVERHAUL
+
 	template <typename T>
-	void printContent(T content[][3], int start, int len, int width, int rowNum){
+	void printContent(T &content, int start, int len, int width, int rowNum){
 	if(!checkFileCall())
         rogueutil::setColor(2);
     std::cout<<"|";
@@ -287,6 +287,22 @@ namespace simplicity{
 				widest = width;
 		}
 		return widest;
+	}
+
+	template <typename T>
+	int widestMember(T &content, int cols, int rows){
+        int widest = 1;
+        for(int i=0; i<cols; i++){
+            for(int j=0; j<rows; j++){
+                std::ostringstream str1;
+                str1 << content[i][j];
+                std::string item = str1.str();
+                int width = item.length();
+                if (width > widest)
+                    widest = width;
+            }
+        }
+        return widest;
 	}
 
 	template <typename T>
@@ -500,9 +516,8 @@ namespace simplicity{
 	}
 
 
-	//This guy's getting gutted and overhauled
 	template<typename T>
-	void print2DArray(T &content, int cols, int rows){                                  //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
+	void print2DArray(T &content, int cols, int rows){              //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
 	    if(!checkFileCall())
             clearScreen();
         //Size is irrelevant if we are only printing to output file
@@ -511,19 +526,15 @@ namespace simplicity{
         if (length > 0){
             std::cout<<"Printing 2D array"<<std::endl;
             //TODO: Add a 2D array widestMember
-            int width = widestMember(content, length);
+            int width = widestMember(content, cols, rows);
             //END TODO
             std::cout<<"  ";                                        //Print two spaces beforehand so that the boxes will line up with row numbers added
             printTop(cols, width);
-            int finalj = 0;
             for (int rowNum = 0; rowNum < rows; rowNum++){
                 std::cout<<rowNum<<" ";                             //Print the row number and then add a space in order to make it not look garbage
-                //TODO: Overload printContent for a row check
                 printContent(content, 0, cols, width, rowNum);
-                //END TODO
                 std::cout<<"  ";
                 printTop(cols, width);
-                rowNum++;
             }
             std::cout<<"  ";
             printBottom(0, cols, width);

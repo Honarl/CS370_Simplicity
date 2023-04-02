@@ -16,6 +16,7 @@ using namespace simplicity;
 int main (void){
 //  ARRAY TEST CASES
 //  Array Int
+/*
     int testIntArray[] = {};
     printArray(testIntArray);   // should output empty data structure prompt
 
@@ -156,21 +157,26 @@ int main (void){
                                 'd','s','f','g','h','d','w','e',
                                 'd','f','r'};
     printLinkedList(testCharList);
-
+*/
 // 2D Array Test Case
+
     int test2D[2][3];
-    test2D[0][0] = 10;
-    test2D[0][1] = 11;
-    test2D[0][2] = 12;
-    test2D[0][3] = 13;
-    test2D[1][0] = 14;
-    test2D[1][1] = 15;
-    test2D[1][2] = 16;
-    test2D[1][3] = 17;
-    test2D[2][0] = 18;
-    test2D[2][1] = 19;
-    test2D[2][2] = 20;
-    test2D[2][3] = 21;
+    test2D[0][0] = 10114;
+    test2D[0][1] = 112151;
+    test2D[0][2] = 12312;
+    test2D[1][0] = 14462;
+    test2D[1][1] = 15525;
+    test2D[1][2] = 16623;
     print2DArray(test2D, 2, 3);
+
+    /*
+    char test2D[5][6] = { 'a','b','c','d','e','f',
+                          'g','h','i','j','k','l',
+                          'm','n','o','p','q','r',
+                          's','t','u','v','w','x',
+                          'y','z','a','b','c','d'
+                          };
+    simplicity::print2DArray(test2D, 5, 6);
+    */
     return EXIT_SUCCESS;
 }
