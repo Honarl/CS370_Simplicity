@@ -534,9 +534,9 @@ namespace simplicity{
                 std::cout<<rowNum<<" ";                             //Print the row number and then add a space in order to make it not look garbage
                 printContent(content, 0, cols, width, rowNum);
                 std::cout<<"  ";
+                if(!(rowNum == rows-1))
                 printTop(cols, width);
             }
-            std::cout<<"  ";
             printBottom(0, cols, width);
             if(checkFileCall){
                setFileCall(0);
