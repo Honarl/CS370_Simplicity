@@ -207,6 +207,45 @@ namespace simplicity{
 		std::cout<<std::endl;									// end index line
 	}
 
+	void printBottom(int start, int printWidth, int width, bool is2D){
+		int end = start + printWidth;
+		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
+			rogueutil::setColor(2);								// setting color to green
+		std::cout<<"+";											// ending leftmost corner
+		for(int j = 0; j < printWidth; j++){ 					// loop to print corner marker
+			for(int i = 0; i < (width + 2); i++){				// loop to print bottom line
+				std::cout<<"-";
+			}
+			std::cout<<"+";
+		}
+		std::cout<<std::endl;									// ending bottom of structure
+
+        if(is2D)
+            std::cout<<"  ";
+
+		for(int i = start; i < end; i++){						// loop to print indexes
+			std::cout<<" ";
+			int halfway = 0;									// initializing to zero
+			if((width+2) % 2 == 0){								// checking if member takes up an even number of spaces
+				halfway = (width / 2);							// setting midpoint
+				if(i >= 10)										// to account for double digit numbers
+					halfway -= 1;
+				std::cout<<" "<<std::setw(halfway)<<" "<<i;		// printing index with appropriate whitespace
+				for(int j = 0; j < halfway; j++)				// loop to finish printing out whitespace
+					std::cout<<" ";
+			}
+			else{												// widest data must take up an odd number of spaces
+				halfway = (width / 2) + 1 ; 					// setting halfway point and rounding up
+				std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index
+				for(int j = 0; j < halfway; j++)				// loop to finish printing whitespace
+					std::cout<<" ";
+			}
+		}
+		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
+			rogueutil::setColor(15);							// setting back to original color
+		std::cout<<std::endl;									// end index line
+	}
+
 	template <typename T>
 	int widestMember(std::list<T> &content, int len){
 		int widest = 1;								// Setting current widest to minimum of one
@@ -223,7 +262,7 @@ namespace simplicity{
 		}
 		return widest;
 	}
-	
+
 	template <typename T>
 	int widestMember(std::forward_list<T> &content, int len){
 		int widest = 1;								// Setting current widest to minimum of one
@@ -334,7 +373,7 @@ template <typename T>
 				outer += "-";
 			outer += "+-+";											// top right
 			//for(int i = 0; i < 3; i++)								// spaces to account for arrow between boxes
-				//outer += " ";		
+				//outer += " ";
 			std::ofstream ofs{"SimplicityLinkedListOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
@@ -352,7 +391,7 @@ template <typename T>
 				std::cout<<"<--| | "<<std::setw(width)<<" "<<" | |";	// ending content line
 			std::cout<<std::endl;
 			for(int i = 0; i < boxes; i++)							// printing bottom of boxes
-				std::cout<<outer;	
+				std::cout<<outer;
 			std::cout<<std::endl;									// ending bottom line
 			std::cout.rdbuf(cout_buff);								// returning control to cout
 			std::cout<<"SimplicityLinkedListOutput.txt has been created!"<<std::endl;
@@ -363,7 +402,7 @@ template <typename T>
 			std::cout<<"Linked List is empty! Nothing to show.";
 		}
 	}
-	
+
 	template <typename T>
 	void printForwardLinkedList(std::forward_list<T> &content){
 		if(!content.empty()){										// verifying that there is stuff to be printed
@@ -579,7 +618,7 @@ template <typename T>
 	void print2DArray(T &content, int cols, int rows){              //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
 	    if(!checkFileCall())
             clearScreen();
-        setFileCall(1);
+        setFileCall(1);                                             //Always print to file, as the size of the terminal is a concern and the structure requires the sizes to remain
         std::ofstream ofs{"Simplicity2DArrayOutput.txt"};
         auto cout_buff = std::cout.rdbuf();
         std::cout.rdbuf(ofs.rdbuf());
@@ -591,14 +630,14 @@ template <typename T>
             int width = widestMember(content, cols, rows);
             std::cout<<"  ";                                        //Print two spaces beforehand so that the boxes will line up with row numbers added
             printTop(cols, width);
-            for (int rowNum = 0; rowNum < rows; rowNum++){
+            for (int rowNum = 0; rowNum < rows; rowNum++){          //Loop through each row and print out every number
                 std::cout<<rowNum<<" ";                             //Print the row number and then add a space in order to make it not look garbage
                 printContent(content, 0, cols, width, rowNum);
                 std::cout<<"  ";
                 if(!(rowNum == rows-1))
                 printTop(cols, width);
             }
-            printBottom(0, cols, width);
+            printBottom(0, cols, width, true);                      //Special version of printContent that adds extra spacing on the indexes
             if(checkFileCall()){
                setFileCall(0);
             }
