@@ -220,7 +220,7 @@ namespace simplicity{
 		}
 		std::cout<<std::endl;									// ending bottom of structure
 
-        if(is2D)
+        if(is2D)                                                //This version of the function is called only from the 2D array function. The boolean both creates the overload and ensures that the wrong version isn't called on accident
             std::cout<<"  ";
 
 		for(int i = start; i < end; i++){						// loop to print indexes

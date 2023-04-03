@@ -173,8 +173,7 @@ int main (void){
                           'g','h','i','j','k','l',
                           'm','n','o','p','q','r',
                           's','t','u','v','w','x',
-                          'y','z','a','b','c','d'
-                          };
+                          'y','z','a','b','c','d'};
     simplicity::print2DArray(test2D2, 5, 6);
 
     return EXIT_SUCCESS;
