@@ -189,7 +189,7 @@ namespace simplicity{
 			int halfway = 0;									// initializing to zero
 			if((width+2) % 2 == 0){								// checking if member takes up an even number of spaces
 				halfway = (width / 2);							// setting midpoint
-				if(i >= 10)										// to account for double digit numbers
+				if(i > 10)										// to account for double digit numbers
 					halfway -= 1;
 				std::cout<<" "<<std::setw(halfway)<<" "<<i;		// printing index with appropriate whitespace
 				for(int j = 0; j < halfway; j++)				// loop to finish printing out whitespace
@@ -197,7 +197,9 @@ namespace simplicity{
 			}
 			else{												// widest data must take up an odd number of spaces
 				halfway = (width / 2) + 1 ; 					// setting halfway point and rounding up
-				std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index
+				if(i > 10)										// to account for double digit numbers
+					halfway -= 1;	
+				std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index	
 				for(int j = 0; j < halfway; j++)				// loop to finish printing whitespace
 					std::cout<<" ";
 			}
@@ -365,6 +367,7 @@ namespace simplicity{
 template <typename T>
 	void printLinkedList(std::list<T> &content){
 		if(!content.empty()){										// verifying that there is stuff to be printed
+			clearScreen();
 			int boxes = content.size();								// getting number of elements
 			int width = widestMember(content, boxes);				// figuring out box width
 			std::string outer;										// creating string for top & bottom of box
@@ -372,8 +375,6 @@ template <typename T>
 			for(int i = 0; i < (width + 2); i++)					// top side
 				outer += "-";
 			outer += "+-+";											// top right
-			//for(int i = 0; i < 3; i++)								// spaces to account for arrow between boxes
-				//outer += " ";
 			std::ofstream ofs{"SimplicityLinkedListOutput.txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
