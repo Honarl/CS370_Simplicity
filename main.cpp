@@ -27,7 +27,7 @@ int main (void){
 //  Array Strings
     string testStringArray[] = {"The","string", "array", "test", "was", "passed", "!"};
     printArray(testStringArray);
- //   arrayToFile(testStringArray);   // should save array to SimplicityArrayOutput.txt
+    arrayToFile(testStringArray);   // should save array to SimplicityArrayOutput.txt
 
 //  STACK TEST CASES
 //  Stack Int

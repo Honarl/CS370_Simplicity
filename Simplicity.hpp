@@ -15,6 +15,17 @@
 #include <list>
 #include <forward_list>
 
+#define HORIZONTAL char(205)
+#define VERTICAL char(186)
+#define TOPLEFT char(201)
+#define TOPRIGHT char(187)
+#define BOTTOMLEFT char(200)
+#define BOTTOMRIGHT char(188)
+#define TOPMIDDLE  char(203)
+#define BOTTOMMIDDLE char(202)
+#define SIDELEFT char(204)
+#define SIDERIGHT char(185)
+
 namespace simplicity{
 
 	bool fromFileCall = 0;
@@ -38,12 +49,15 @@ namespace simplicity{
 	void printTop(int rowWidth, int width){
 		if(!checkFileCall())
 			rogueutil::setColor(2);					// setting color to green
-		std::cout<<"+";								// printing leftmost corner
+		std::cout<< TOPLEFT;						// printing leftmost corner
 		for(int j = 0; j < rowWidth; j++){			// loop to end current member box
 			for(int i = 0; i < (width + 2); i++){	// loop to print width
-				std::cout<<"-";
+				std::cout<< HORIZONTAL;
 			}
-			std::cout<<"+";
+			if(j < rowWidth - 1)
+				std::cout<<TOPMIDDLE;
+			else
+				std::cout<<TOPRIGHT;
 		}
 		std::cout<<std::endl;						// ending top structure
 		if(!checkFileCall())
@@ -54,7 +68,7 @@ namespace simplicity{
 	void printContent(T content[], int start, int length, int width){
 		if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(2);				// setting color to green
-		std::cout<<"|";							// Leftmost member box
+		std::cout<< VERTICAL;					// Leftmost member box
 		if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(15);			// setting back to original color
 		int end = start + length;
@@ -63,7 +77,7 @@ namespace simplicity{
 			std::cout<<content[i];
 			if(!checkFileCall())				// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(2);			// setting color to green
-			std::cout<<" |";
+			std::cout<<" "<< VERTICAL;
 			if(!checkFileCall())				// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(15);		// setting back to original color
 		}
@@ -76,7 +90,7 @@ namespace simplicity{
 		temp = content;                     // Otherwise we can't iterate without deleting it
 		if(!checkFileCall())				// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(2);			// setting color to green
-		std::cout<<"|";						// Leftmost member box
+		std::cout<< VERTICAL;						// Leftmost member box
 		if(!checkFileCall())				// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(15);		// setting back to original color
 		if(start != 0){						// making so the queue start matches the correct location for what has and hasnt been printed
@@ -88,7 +102,7 @@ namespace simplicity{
 			std::cout<<temp.front();
 			if(!checkFileCall())			// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(2);		// setting color to green
-			std::cout<<" |";
+			std::cout<<" "<<VERTICAL;
 			if(!checkFileCall())			// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(15);	// setting back to original color
 			temp.pop();                     // Move to the next item in the new queue
@@ -102,29 +116,35 @@ namespace simplicity{
 		temp = content;                                 // Otherwise we can't iterate without deleting it
 		if(!checkFileCall())							// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(2);						// setting color to green
-		std::cout<<"+";                                 // Formatting to match arrays and queues
+		std::cout<<TOPLEFT;                             // Formatting to match arrays and queues
 		for(int j = 0; j < (width + 2); j++){
-			std::cout<<"-";                         	// Makes the boxes the same size
+			std::cout<<HORIZONTAL;                      // Makes the boxes the same size
 		}
-		std::cout<<"+";                                 // Formatting for top line done
+		std::cout<<TOPRIGHT;                            // Formatting for top line done
 		std::cout<<std::endl;
 		for(int i = 0; i < length; i++){				// loop to print whitespace and member
 			if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(2);					// setting color to green
-			std::cout<<"| "<<std::setw(width);
+			std::cout<<VERTICAL<<" "<<std::setw(width);
 			if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(15);				// setting back to original color
 			std::cout<<temp.top();
 			if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(2);					// setting color to green
-			std::cout<<" | "<<i;
+			std::cout<<" "<<VERTICAL<<" "<<i;
 			temp.pop();                            		// Move to the next item in the new stack
 			std::cout<<std::endl;						// Next line for next item
-			std::cout<<"+";                         	// Box formatting below
+			if(i < length -1)
+				std::cout<<SIDELEFT;                   	// Box formatting below
+			else
+				std::cout<<BOTTOMLEFT;
 			for(int j = 0; j < (width + 2); j++){
-				std::cout<<"-";
-		}
-			std::cout<<"+";                        		// End box formatting
+				std::cout<<HORIZONTAL;
+			}
+			if(i < length - 1)
+				std::cout<<SIDERIGHT;              		// End box formatting
+			else
+				std::cout<<BOTTOMRIGHT;
 			if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(15);				// setting back to original color
 			std::cout<<std::endl;                   	// Next item
@@ -135,7 +155,7 @@ namespace simplicity{
 	void printContent(std::span<T,length> content, int start, int len, int width){
 		if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(2);					// setting color to green
-		std::cout<<"|";								// Leftmost member box
+		std::cout<<VERTICAL;								// Leftmost member box
 		if(!checkFileCall())						// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(15);				// setting back to original color
 		int end = start + len;
@@ -144,7 +164,7 @@ namespace simplicity{
 			std::cout<<content[i];
 			if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(2);				// setting color to green
-			std::cout<<" |";
+			std::cout<<" "<<VERTICAL;
 			if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
 				rogueutil::setColor(15);			// setting back to original color
 		}
@@ -155,7 +175,7 @@ namespace simplicity{
 	void printContent(T &content, int start, int len, int width, int rowNum){
 	if(!checkFileCall())
         rogueutil::setColor(2);
-    std::cout<<"|";
+    std::cout<<VERTICAL;
     if(!checkFileCall())
         rogueutil::setColor(15);
     int end = start + len;
@@ -164,7 +184,7 @@ namespace simplicity{
         std::cout<<content[i][rowNum];
         if(!checkFileCall())
             rogueutil::setColor(2);
-        std::cout<<" |";
+        std::cout<<" "<<VERTICAL;
         if(!checkFileCall())
             rogueutil::setColor(15);
     }
@@ -175,12 +195,15 @@ namespace simplicity{
 		int end = start + printWidth;
 		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
 			rogueutil::setColor(2);								// setting color to green
-		std::cout<<"+";											// ending leftmost corner
+		std::cout<<BOTTOMLEFT;											// ending leftmost corner
 		for(int j = 0; j < printWidth; j++){ 					// loop to print corner marker
 			for(int i = 0; i < (width + 2); i++){				// loop to print bottom line
-				std::cout<<"-";
+				std::cout<<HORIZONTAL;
 			}
-			std::cout<<"+";
+			if(j < printWidth - 1)
+				std::cout<<BOTTOMMIDDLE;
+			else
+				std::cout<<BOTTOMRIGHT;
 		}
 		std::cout<<std::endl;									// ending bottom of structure
 

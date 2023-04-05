@@ -11,10 +11,10 @@ using namespace simplicity;
 
 int main(void){
 
-	vector<char> x = {'s','i','m','p','l','i','c','i','t','y'};
-	vectorToFile(x);
+	//vector<char> x = {'s','i','m','p','l','i','c','i','t','y'};
+	//vectorToFile(x);
 	
-	queue<int> numbers;
+	stack<int> numbers;
 	for(int i = 0; i < 20; i++){
 		numbers.push(rand());
 
@@ -22,7 +22,7 @@ int main(void){
 			numbers.pop();
 		}
 		
-		printQueue(numbers);
+		printStack(numbers);
 	}
 
 	
