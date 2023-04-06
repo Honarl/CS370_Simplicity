@@ -13,6 +13,8 @@
 using namespace std;
 using namespace simplicity;
 
+// TEST CASES
+
 /*******************************************************************************************************************************************************************/
 void testCaseArrays(){
 //  ARRAY TEST CASES
