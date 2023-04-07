@@ -198,8 +198,8 @@ namespace simplicity{
 			else{												// widest data must take up an odd number of spaces
 				halfway = (width / 2) + 1 ; 					// setting halfway point and rounding up
 				if(i > 10)										// to account for double digit numbers
-					halfway -= 1;	
-				std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index	
+					halfway -= 1;
+				std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index
 				for(int j = 0; j < halfway; j++)				// loop to finish printing whitespace
 					std::cout<<" ";
 			}
@@ -654,6 +654,7 @@ template <typename T>
         std::cout<<"Simplicity2DArrayOutput.txt has been created!"<<std::endl;
         std::cout<<"Press any key to continue...";
         wait();
+        return;
 	}
 
 	template<typename T>
