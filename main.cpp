@@ -13,10 +13,13 @@
 using namespace std;
 using namespace simplicity;
 
-int main (void){
+// TEST CASES
+
+/*******************************************************************************************************************************************************************/
+void testCaseArrays(){
 //  ARRAY TEST CASES
 //  Array Int
-/*
+
     int testIntArray[] = {};
     printArray(testIntArray);   // should output empty data structure prompt
 
@@ -27,9 +30,10 @@ int main (void){
 //  Array Strings
     string testStringArray[] = {"The","string", "array", "test", "was", "passed", "!"};
     printArray(testStringArray);
- //   arrayToFile(testStringArray);   // should save array to SimplicityArrayOutput.txt
-
-//  STACK TEST CASES
+    arrayToFile(testStringArray);   // should save array to SimplicityArrayOutput.txt
+}
+/*******************************************************************************************************************************************************************/
+void testCaseStacks(){
 //  Stack Int
     stack<int> testIntStack;
     testIntStack.push(1);
@@ -44,7 +48,7 @@ int main (void){
         printStack(testIntStack);
         testIntStack.pop();
     }
-    printStack(testIntStack);   // should output empty data structure prompt
+    //printStack(testIntStack);   // should output empty data structure prompt
 
 //  Stack Char
     stack<char> testCharStack;
@@ -55,7 +59,7 @@ int main (void){
     testCharStack.push('e');
     testCharStack.push('F');
     testCharStack.push('G');
-    printStack(testCharStack);
+    //printStack(testCharStack);
 
 //  Stack Strings
     stack<string> testStringStack;
@@ -65,11 +69,11 @@ int main (void){
     testStringStack.push("stack");
     testStringStack.push("of");
     testStringStack.push("Strings");
-    printStack(testStringStack);
- //   stackToFile(testStringStack);   // should save stack to SimplicityStackOutput.txt
-
-
-// Queue Test Cases
+    //printStack(testStringStack);
+    //stackToFile(testStringStack);   // should save stack to SimplicityStackOutput.txt
+}
+/*******************************************************************************************************************************************************************/
+void testCaseQueue(){
 //  Queue Int
     queue<int> testIntQueue;
     testIntQueue.push(1534);
@@ -84,7 +88,7 @@ int main (void){
         printQueue(testIntQueue);
         testIntQueue.pop();
     }
-    printQueue(testIntQueue);   // should output empty data structure prompt
+    //printQueue(testIntQueue);   // should output empty data structure prompt
 
 //  Queue Char
     queue<char> testCharQueue;
@@ -95,7 +99,7 @@ int main (void){
     testCharQueue.push('E');
     testCharQueue.push('f');
     testCharQueue.push('G');
-    printQueue(testCharQueue);
+    //printQueue(testCharQueue);
 
 //  Queue Strings
     queue<string> testStringQueue;
@@ -105,11 +109,11 @@ int main (void){
     testStringQueue.push("queue");
     testStringQueue.push("of");
     testStringQueue.push("strings");
-    printQueue(testStringQueue);
-  //  queueToFile(testStringQueue);   // should save queue to SimplicityQueueOutput.txt
-
-
-//  Vector Test Cases
+    //printQueue(testStringQueue);
+    //queueToFile(testStringQueue);   // should save queue to SimplicityQueueOutput.txt
+}
+/*******************************************************************************************************************************************************************/
+void testCaseVectors(){
 //  Vector Int
     vector<int> testIntVector;
     testIntVector.push_back(-51);
@@ -129,8 +133,7 @@ int main (void){
         testVector.push_back('a' + rand()%26);
     }
     printVector(testVector);
- //   vectorToFile(testVector);   // should save vector to SimplicityVectorOutput.txt
-
+    //vectorToFile(testVector);   // should save vector to SimplicityVectorOutput.txt
 
 //  Vector String
     vector<string> testStringVector;
@@ -140,15 +143,12 @@ int main (void){
     testStringVector.push_back("vector");
     testStringVector.push_back("of");
     testStringVector.push_back("strings");
-
-// List Test Cases
+}
+/*******************************************************************************************************************************************************************/
+void testCaseList(){
 //  List Int
-    list<int> testIntList = {1,2,3,4,5,6,7};
+    list<int> testIntList;
     printLinkedList(testIntList);
-
-// List Strings
-    list<string> testStringList = {"This","is","a","list", "test"};
-    printLinkedList(testStringList);
 
 //  List Char
     list<char> testCharList = {'s','g','f','g','d','j','k',
@@ -157,24 +157,37 @@ int main (void){
                                 'd','s','f','g','h','d','w','e',
                                 'd','f','r'};
     printLinkedList(testCharList);
-*/
-// 2D Array Test Case
 
-    int test2D[2][3];
-    test2D[0][0] = 10114;
-    test2D[0][1] = 112151;
-    test2D[0][2] = 12312;
-    test2D[1][0] = 14462;
-    test2D[1][1] = 15525;
-    test2D[1][2] = 16623;
-    print2DArray(test2D, 2, 3);
+// List Strings
+    list<string> testStringList = {"This","is","a","list", "test"};
+    printLinkedList(testStringList);
+}
+/*******************************************************************************************************************************************************************/
+void testCase2DArray(){
+// 2D Array Int
+    int test2DInt[2][3] = {0};
+    for(int i = 0; i < 30; i++) {
+        for(int j = 0; j < 30; j++){
+            test2DInt[i][j] = rand() % 1000;
+        }
+    }
+    //print2DArray(test2DInt, 30, 30);
 
-    char test2D2[5][6] = { 'a','b','c','d','e','f',
+// 2D Array Char
+    char test2DChar[5][6] = { 'a','b','c','d','e','f',
                           'g','h','i','j','k','l',
                           'm','n','o','p','q','r',
                           's','t','u','v','w','x',
                           'y','z','a','b','c','d'};
-    simplicity::print2DArray(test2D2, 5, 6);
+    //print2DArray(test2DChar, 5, 6);
 
+// 2D Array Strings
+    string test2DString[2][2] = {"kohei","clark","maybe","work"};
+    print2DArray(test2DString, 2,2);
+}
+/*******************************************************************************************************************************************************************/
+
+int main (void){
+    testCase2DArray();
     return EXIT_SUCCESS;
 }
