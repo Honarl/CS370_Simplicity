@@ -10,21 +10,15 @@ using namespace std;
 using namespace simplicity;
 
 int main(void){
-
-	vector<char> x = {'s','i','m','p','l','i','c','i','t','y'};
-	vectorToFile(x);
+	int test2DInt[10][10] = {0};
+    for(int i = 0; i < 10; i++) {
+        for(int j = 0; j < 10; j++){
+            test2DInt[i][j] = rand() % 1000;
+        }
+    }
+    print2DArray(test2DInt, 10, 10);
 	
-	queue<int> numbers;
-	for(int i = 0; i < 20; i++){
-		numbers.push(rand());
-
-		if(i > 15){
-			numbers.pop();
-		}
-		
-		printQueue(numbers);
-	}
-
-	
+	list<string> testStringList = {"Does","Anyone","Have","Any", "Questions", "?"};
+    printLinkedList(testStringList);
 	return 0;
 }
