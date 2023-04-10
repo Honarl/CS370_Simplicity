@@ -364,8 +364,8 @@ namespace simplicity{
         return widest;
 	}
 
-template <typename T>
-	void printLinkedList(std::list<T> &content){
+	template <typename T>
+	void printLinkedList(std::list<T> &content, std::string filename){
 		if(!content.empty()){										// verifying that there is stuff to be printed
 			clearScreen();
 			int boxes = content.size();								// getting number of elements
@@ -375,9 +375,10 @@ template <typename T>
 			for(int i = 0; i < (width + 2); i++)					// top side
 				outer += "-";
 			outer += "+-+";											// top right
-			std::ofstream ofs{"SimplicityLinkedListOutput.txt"};	// declaring output file
+			std::ofstream ofs{filename + ".txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
+			std::cout<<"Printing Linked List"<<std::endl;
 			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
 				std::cout<<outer;
 			std::cout<<std::endl<<"   ";							// ending top line
@@ -395,17 +396,17 @@ template <typename T>
 				std::cout<<outer;
 			std::cout<<std::endl;									// ending bottom line
 			std::cout.rdbuf(cout_buff);								// returning control to cout
-			std::cout<<"SimplicityLinkedListOutput.txt has been created!"<<std::endl;
+			std::cout<<filename<<".txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 		else{
-			std::cout<<"Linked List is empty! Nothing to show.";
+			std::cout<<"Linked List is empty!";
 		}
 	}
 
 	template <typename T>
-	void printForwardLinkedList(std::forward_list<T> &content){
+	void printForwardLinkedList(std::forward_list<T> &content, std::string filename){
 		if(!content.empty()){										// verifying that there is stuff to be printed
 			int boxes = std::distance(content.begin(), content.end()); ;								// getting number of elements
 			int width = widestMember(content, boxes);				// figuring out box width
@@ -416,8 +417,9 @@ template <typename T>
 			outer += "+";											// top right
 			for(int i = 0; i < 5; i++)								// spaces to account for arrow between boxes
 				outer += " ";
-			std::ofstream ofs{"SimplicityForwardLinkedListOutput.txt"};	// declaring output file
+			std::ofstream ofs{filename + ".txt"};					// declaring output file
 			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
+			std::cout<<"Printing Forward Linked List"<<std::cout;
 			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
 			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
 				std::cout<<outer;
@@ -430,12 +432,12 @@ template <typename T>
 				std::cout<<outer;
 			std::cout<<std::endl;									// ending bottom line
 			std::cout.rdbuf(cout_buff);								// returning control to cout
-			std::cout<<"SimplicityForwardLinkedListOutput.txt has been created!"<<std::endl;
+			std::cout<<filename<<".txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 		else{
-			std::cout<<"Linked List is empty! Nothing to show."<<std::endl;
+			std::cout<<"Forward Linked List is empty!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
@@ -472,7 +474,7 @@ template <typename T>
 			}
 		}
 		else
-			std::cout<<"Your array is empty! Nothing to print."<<std::endl;
+			std::cout<<"Your array is empty!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 	}
@@ -508,7 +510,7 @@ template <typename T>
 			}
 		}
 		else{
-			std::cout<<"Your array is empty! Nothing to print."<<std::endl;
+			std::cout<<"Your array is empty!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
@@ -548,7 +550,7 @@ template <typename T>
 			}
 		}
 		else{
-			std::cout<<"Your queue is empty! Garbage data may follow!"<<std::endl;
+			std::cout<<"Your queue is empty!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
@@ -573,7 +575,7 @@ template <typename T>
 			}
 		}
 		else{
-			std::cout<<"Your stack is empty! Garbage data may follow!"<<std::endl;
+			std::cout<<"Your stack is empty!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
@@ -610,24 +612,24 @@ template <typename T>
 			}
 		}
 		else
-			std::cout<<"Vector is empty! Garbage data may follow!"<<std::endl;
+			std::cout<<"Vector is empty!"<<std::endl;
 
 	}
 
 
 	template<typename T>
-	void print2DArray(T &content, int cols, int rows){              //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
+	void print2DArray(T &content, int cols, int rows, std::string filename){              //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
 	    if(!checkFileCall())
             clearScreen();
         setFileCall(1);                                             //Always print to file, as the size of the terminal is a concern and the structure requires the sizes to remain
-        std::ofstream ofs{"Simplicity2DArrayOutput.txt"};
+        std::ofstream ofs{filename = ".txt"};
         auto cout_buff = std::cout.rdbuf();
         std::cout.rdbuf(ofs.rdbuf());
         //Size is irrelevant if we are only printing to output file
         //And the length of each line is integral to the data structure, the following call does remain however so that we can confirm it is not empty
         int length = sizeof(content)/sizeof(content[0][0]);
         if (length > 0){
-            std::cout<<"Printing 2D array and creating output file"<<std::endl;
+            std::cout<<"Printing 2D Array"<<std::endl;
             int width = widestMember(content, cols, rows);
             std::cout<<"  ";                                        //Print two spaces beforehand so that the boxes will line up with row numbers added
             printTop(cols, width);
@@ -648,114 +650,114 @@ template <typename T>
             }
         }
         else{
-            std::cout<<"Your array is empty! Nothing to print!";
+            std::cout<<"Your array is empty!";
         }
         std::cout.rdbuf(cout_buff);
-        std::cout<<"Simplicity2DArrayOutput.txt has been created!"<<std::endl;
+        std::cout<<filename<<".txt has been created!"<<std::endl;
         std::cout<<"Press any key to continue...";
         wait();
         return;
 	}
 
 	template<typename T>
-	void arrayToFile(T &content){
+	void arrayToFile(T &content, std::string filename){
 		int length = sizeof(content)/sizeof(content[0]);		// checking structure is not empty
 		if(length > 0){
 			setFileCall(1);										// setting true
-			std::ofstream ofs{"SimplicityArrayOutput.txt"};		// declaring output file
+			std::ofstream ofs{filename + ".txt"};		// declaring output file
 			auto cout_buff = std::cout.rdbuf();					// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());						// substitute internal buffer with file buffer
 			printArray(content);								// filling file buffer with data from function call
 			std::cout.rdbuf(cout_buff);							// returning control to cout
-			std::cout<<"SimplicityArrayOutput.txt has been created!"<<std::endl;
+			std::cout<<filename<<".txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 		else{
-			std::cout<<"Looks like your array is empty! That file would be nothing!";
+			std::cout<<"Looks like your array is empty!";
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 	}
 
 	template<typename T, std::size_t length>
-	void arrayToFile(std::array<T,length>&content){			// overload for STL array
+	void arrayToFile(std::array<T,length>&content, std::string filename){			// overload for STL array
 		if(!content.empty()){
 			setFileCall(1);									// setting true
-			std::ofstream ofs{"SimplicityArrayOutput.txt"};	// declaring output file
+			std::ofstream ofs{filename + ".txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
 			printArray(content);							// filling file buffer with data from function call
 			std::cout.rdbuf(cout_buff);						// returning control to cout
-			std::cout<<"SimplicityArrayOutput.txt has been created!"<<std::endl;
+			std::cout<<filename<<".txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 		else{
-			std::cout<<"Looks like your array is empty! That file would be nothing!";
+			std::cout<<"Looks like your array is empty!";
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 	}
 
 	template <typename T>
-	void vectorToFile(std::vector<T>&content){
+	void vectorToFile(std::vector<T>&content, std::string filename){
 		int len = content.size();								// checking it is not empty
 		if(len > 0){
 			setFileCall(1);										// setting true
-			std::ofstream ofs{"SimplicityVectorOutput.txt"};	// declaring output file
+			std::ofstream ofs{filename + ".txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();					// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());						// substitute internal buffer with file buffer
 			printVector(content);								// filling file buffer with data from function call
 			std::cout.rdbuf(cout_buff);							// returning control to cout
-			std::cout<<"SimplicityVectorOutput.txt has been created!"<<std::endl;
+			std::cout<<filename<<".txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 		else{
-			std::cout<<"Looks like your vector is empty! That file would be nothing!"<<std::endl;
+			std::cout<<"Looks like your vector is empty!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 	}
 
 	template <typename T>
-	void queueToFile(std::queue<T>& content){
+	void queueToFile(std::queue<T>& content, std::string filename){
 		if(!content.empty()){								// checking it is not empty
 			setFileCall(1);									// setting true
 			int length = content.size();					// getting length
-			std::ofstream ofs{"SimplicityQueueOutput.txt"};	// declaring output file
+			std::ofstream ofs{filename + ".txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
 			printQueue(content, length);					// filling file buffer with data from function call
 			std::cout.rdbuf(cout_buff);						// returning control to cout
-			std::cout<<"SimplicityQueueOutput.txt has been created!"<<std::endl;
+			std::cout<<filename<<".txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 		else{
-			std::cout<<"Looks like your queue is empty! That file would be nothing!";
+			std::cout<<"Looks like your queue is empty!";
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 	}
 
 	template <typename T>
-	void stackToFile(std::stack<T>& content){
+	void stackToFile(std::stack<T>& content, std::string filename){
 		if(!content.empty()){								// checking it is not empty
 			setFileCall(1);									// setting true
 			int length = content.size();					// getting length
-			std::ofstream ofs{"SimplicityStackOutput.txt"};	// declaring output file
+			std::ofstream ofs{filename + ".txt"};	// declaring output file
 			auto cout_buff = std::cout.rdbuf();				// saves pointer to output buffer
 			std::cout.rdbuf(ofs.rdbuf());					// substitute internal buffer with file buffer
 			printStack(content, length);					// filling file buffer with data from function call
 			std::cout.rdbuf(cout_buff);						// returning control to cout
-			std::cout<<"SimplicityStackOutput.txt has been created!"<<std::endl;
+			std::cout<<filename<<".txt has been created!"<<std::endl;
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
 		else{
-			std::cout<<"Looks like your stack is empty! That file would be nothing!";
+			std::cout<<"Looks like your stack is empty!";
 			std::cout<<"Press any key to continue..."<<std::endl;
 			wait();
 		}
