@@ -30,7 +30,7 @@ void testCaseArrays(){
 //  Array Strings
     string testStringArray[] = {"The","string", "array", "test", "was", "passed", "!"};
     printArray(testStringArray);
-    arrayToFile(testStringArray);   // should save array to SimplicityArrayOutput.txt
+    arrayToFile(testStringArray, "TestStringArrayOutput");   // should save array to SimplicityArrayOutput.txt
 }
 /*******************************************************************************************************************************************************************/
 void testCaseStacks(){
@@ -70,7 +70,7 @@ void testCaseStacks(){
     testStringStack.push("of");
     testStringStack.push("Strings");
     //printStack(testStringStack);
-    //stackToFile(testStringStack);   // should save stack to SimplicityStackOutput.txt
+    //stackToFile(testStringStack, "TestStringStackOutput");   // should save stack to SimplicityStackOutput.txt
 }
 /*******************************************************************************************************************************************************************/
 void testCaseQueue(){
@@ -110,7 +110,7 @@ void testCaseQueue(){
     testStringQueue.push("of");
     testStringQueue.push("strings");
     //printQueue(testStringQueue);
-    //queueToFile(testStringQueue);   // should save queue to SimplicityQueueOutput.txt
+    //queueToFile(testStringQueue, "TestStringQueueOutput");   // should save queue to SimplicityQueueOutput.txt
 }
 /*******************************************************************************************************************************************************************/
 void testCaseVectors(){
@@ -133,7 +133,7 @@ void testCaseVectors(){
         testVector.push_back('a' + rand()%26);
     }
     printVector(testVector);
-    //vectorToFile(testVector);   // should save vector to SimplicityVectorOutput.txt
+    //vectorToFile(testVector, "TestVectorOutput");   // should save vector to SimplicityVectorOutput.txt
 
 //  Vector String
     vector<string> testStringVector;
@@ -148,7 +148,7 @@ void testCaseVectors(){
 void testCaseList(){
 //  List Int
     list<int> testIntList;
-    printLinkedList(testIntList);
+    printLinkedList(testIntList, "TestIntLinkedListOutput");
 
 //  List Char
     list<char> testCharList = {'s','g','f','g','d','j','k',
@@ -156,11 +156,11 @@ void testCaseList(){
                                 'n','m','j','h','k','i','o','p',
                                 'd','s','f','g','h','d','w','e',
                                 'd','f','r'};
-    printLinkedList(testCharList);
+    printLinkedList(testCharList, "TestCharLinkedListOutput");
 
 // List Strings
     list<string> testStringList = {"This","is","a","list", "test"};
-    printLinkedList(testStringList);
+    printLinkedList(testStringList, "TestStringLinkedListOutput");
 }
 /*******************************************************************************************************************************************************************/
 void testCase2DArray(){
@@ -171,7 +171,7 @@ void testCase2DArray(){
             test2DInt[i][j] = rand() % 1000;
         }
     }
-    //print2DArray(test2DInt, 30, 30);
+    //print2DArray(test2DInt, 30, 30, "TestInt2DArrayOutput");
 
 // 2D Array Char
     char test2DChar[5][6] = { 'a','b','c','d','e','f',
@@ -179,11 +179,11 @@ void testCase2DArray(){
                           'm','n','o','p','q','r',
                           's','t','u','v','w','x',
                           'y','z','a','b','c','d'};
-    //print2DArray(test2DChar, 5, 6);
+    //print2DArray(test2DChar, 5, 6, "TestChar2DArrayOutput");
 
 // 2D Array Strings
     string test2DString[2][2] = {"kohei","clark","maybe","work"};
-    print2DArray(test2DString, 2,2);
+    print2DArray(test2DString, 2,2, "TestString2DArrayOutput");
 }
 /*******************************************************************************************************************************************************************/
 
