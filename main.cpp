@@ -166,8 +166,8 @@ void testCaseList(){
 void testCase2DArray(){
 // 2D Array Int
     int test2DInt[2][3] = {0};
-    for(int i = 0; i < 30; i++) {
-        for(int j = 0; j < 30; j++){
+    for(int i = 0; i < 2; i++) {
+        for(int j = 0; j < 3; j++){
             test2DInt[i][j] = rand() % 1000;
         }
     }

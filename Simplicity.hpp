@@ -168,6 +168,7 @@ namespace simplicity{
         if(!checkFileCall())
             rogueutil::setColor(15);
     }
+    std::cout<<" "<<rowNum;
     std::cout<<std::endl;
 	}
 
@@ -209,44 +210,6 @@ namespace simplicity{
 		std::cout<<std::endl;									// end index line
 	}
 
-	void printBottom(int start, int printWidth, int width, bool is2D){
-		int end = start + printWidth;
-		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
-			rogueutil::setColor(2);								// setting color to green
-		std::cout<<"+";											// ending leftmost corner
-		for(int j = 0; j < printWidth; j++){ 					// loop to print corner marker
-			for(int i = 0; i < (width + 2); i++){				// loop to print bottom line
-				std::cout<<"-";
-			}
-			std::cout<<"+";
-		}
-		std::cout<<std::endl;									// ending bottom of structure
-
-        if(is2D)                                                //This version of the function is called only from the 2D array function. The boolean both creates the overload and ensures that the wrong version isn't called on accident
-            std::cout<<"  ";
-
-		for(int i = start; i < end; i++){						// loop to print indexes
-			std::cout<<" ";
-			int halfway = 0;									// initializing to zero
-			if((width+2) % 2 == 0){								// checking if member takes up an even number of spaces
-				halfway = (width / 2);							// setting midpoint
-				if(i >= 10)										// to account for double digit numbers
-					halfway -= 1;
-				std::cout<<" "<<std::setw(halfway)<<" "<<i;		// printing index with appropriate whitespace
-				for(int j = 0; j < halfway; j++)				// loop to finish printing out whitespace
-					std::cout<<" ";
-			}
-			else{												// widest data must take up an odd number of spaces
-				halfway = (width / 2) + 1 ; 					// setting halfway point and rounding up
-				std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index
-				for(int j = 0; j < halfway; j++)				// loop to finish printing whitespace
-					std::cout<<" ";
-			}
-		}
-		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
-			rogueutil::setColor(15);							// setting back to original color
-		std::cout<<std::endl;									// end index line
-	}
 
 	template <typename T>
 	int widestMember(std::list<T> &content, int len){
@@ -622,7 +585,7 @@ namespace simplicity{
 	    if(!checkFileCall())
             clearScreen();
         setFileCall(1);                                             //Always print to file, as the size of the terminal is a concern and the structure requires the sizes to remain
-        std::ofstream ofs{filename += ".txt"};
+        std::ofstream ofs{filename + ".txt"};
         auto cout_buff = std::cout.rdbuf();
         std::cout.rdbuf(ofs.rdbuf());
         //Size is irrelevant if we are only printing to output file
@@ -631,16 +594,13 @@ namespace simplicity{
         if (length > 0){
             std::cout<<"Printing 2D Array"<<std::endl;
             int width = widestMember(content, cols, rows);
-            std::cout<<"  ";                                        //Print two spaces beforehand so that the boxes will line up with row numbers added
             printTop(cols, width);
             for (int rowNum = 0; rowNum < rows; rowNum++){          //Loop through each row and print out every number
-                std::cout<<rowNum<<" ";                             //Print the row number and then add a space in order to make it not look garbage
                 printContent(content, 0, cols, width, rowNum);
-                std::cout<<"  ";
                 if(!(rowNum == rows-1))
                 printTop(cols, width);
             }
-            printBottom(0, cols, width, true);                      //Special version of printContent that adds extra spacing on the indexes
+            printBottom(0, cols, width);                      //Special version of printContent that adds extra spacing on the indexes
             if(checkFileCall()){
                setFileCall(0);
             }
