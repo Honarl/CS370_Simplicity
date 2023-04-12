@@ -419,7 +419,7 @@ namespace simplicity{
 				outer += " ";
 			std::ofstream ofs{filename + ".txt"};					// declaring output file
 			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
-			std::cout<<"Printing Forward Linked List"<<std::cout;
+			std::cout<<"Printing Forward Linked List"<<std::endl;
 			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
 			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
 				std::cout<<outer;
@@ -622,7 +622,7 @@ namespace simplicity{
 	    if(!checkFileCall())
             clearScreen();
         setFileCall(1);                                             //Always print to file, as the size of the terminal is a concern and the structure requires the sizes to remain
-        std::ofstream ofs{filename = ".txt"};
+        std::ofstream ofs{filename += ".txt"};
         auto cout_buff = std::cout.rdbuf();
         std::cout.rdbuf(ofs.rdbuf());
         //Size is irrelevant if we are only printing to output file
