@@ -171,7 +171,7 @@ void testCase2DArray(){
             test2DInt[i][j] = rand() % 1000;
         }
     }
-    //print2DArray(test2DInt, 30, 30, "TestInt2DArrayOutput");
+    print2DArray(test2DInt, 2, 3, "TestInt2DArrayOutput");
 
 // 2D Array Char
     char test2DChar[5][6] = { 'a','b','c','d','e','f',
