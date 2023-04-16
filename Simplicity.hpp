@@ -153,23 +153,27 @@ namespace simplicity{
 
 	template <typename T>
 	void printContent(T &content, int start, int len, int width, int rowNum){
-	if(!checkFileCall())
-        rogueutil::setColor(2);
-    std::cout<<"|";
-    if(!checkFileCall())
-        rogueutil::setColor(15);
-    int end = start + len;
-    for (int i = start; i < end; i++){
-        std::cout<<" "<<std::setw(width);
-        std::cout<<content[i][rowNum];
-        if(!checkFileCall())
-            rogueutil::setColor(2);
-        std::cout<<" |";
-        if(!checkFileCall())
-            rogueutil::setColor(15);
-    }
-    std::cout<<" "<<rowNum;
-    std::cout<<std::endl;
+		if(!checkFileCall())
+			rogueutil::setColor(2);
+		std::cout<<"|";
+		if(!checkFileCall())
+			rogueutil::setColor(15);
+		int end = start + len;
+		for (int i = start; i < end; i++){
+			std::cout<<" "<<std::setw(width);
+			std::cout<<content[i][rowNum];
+			if(!checkFileCall())
+				rogueutil::setColor(2);
+			std::cout<<" |";
+			if(!checkFileCall())
+				rogueutil::setColor(15);
+		}
+		if(!checkFileCall())
+			rogueutil::setColor(2);
+		std::cout<<" "<<rowNum;
+		if(!checkFileCall())
+			rogueutil::setColor(15);
+		std::cout<<std::endl;
 	}
 
 	void printBottom(int start, int printWidth, int width){
@@ -367,6 +371,20 @@ namespace simplicity{
 			std::cout<<"Linked List is empty!";
 		}
 	}
+	
+	template <typename T>
+	void printListContent(std::string outer, std::forward_list<T> content, int boxes, int width){
+			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
+			std::cout<<outer;
+			std::cout<<std::endl;									// ending top line
+			for(typename std::forward_list<T>::iterator it = content.begin(); it != content.end(); ++it){
+				std::cout<<"| "<<std::setw(width)<<*it <<" | |-->";	// printing content
+			}
+			std::cout<<std::endl;									// ending content line
+			for(int i = 0; i < boxes; i++)							// printing bottom of boxes
+				std::cout<<outer;
+			std::cout<<std::endl;									// ending bottom line
+	}
 
 	template <typename T>
 	void printForwardLinkedList(std::forward_list<T> &content, std::string filename){
@@ -377,27 +395,24 @@ namespace simplicity{
 			outer += "+";											// top left corner of box
 			for(int i = 0; i < (width + 2); i++)					// top side
 				outer += "-";
-			outer += "+";											// top right
-			for(int i = 0; i < 5; i++)								// spaces to account for arrow between boxes
+			outer += "+-+";											// top right
+			for(int i = 0; i < 3; i++)								// spaces to account for arrow between boxes
 				outer += " ";
-			std::ofstream ofs{filename + ".txt"};					// declaring output file
-			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
-			std::cout<<"Printing Forward Linked List"<<std::endl;
-			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
-			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
-				std::cout<<outer;
-			std::cout<<std::endl;									// ending top line
-			for(typename std::forward_list<T>::iterator it = content.begin(); it != content.end(); ++it){
-				std::cout<<"| "<<std::setw(width)<<*it <<" | --> ";	// printing content
+				
+			if(outer.length() < rogueutil::tcols()){
+				std::cout<<"Printing Forward Linked List"<<std::endl;
+				printListContent(outer, content, boxes, width);
 			}
-			std::cout<<std::endl;									// ending content line
-			for(int i = 0; i < boxes; i++)							// printing bottom of boxes
-				std::cout<<outer;
-			std::cout<<std::endl;									// ending bottom line
-			std::cout.rdbuf(cout_buff);								// returning control to cout
-			std::cout<<filename<<".txt has been created!"<<std::endl;
-			std::cout<<"Press any key to continue..."<<std::endl;
-			wait();
+			else{
+				std::ofstream ofs{filename + ".txt"};					// declaring output file
+				auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
+				std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
+				printListContent(outer, content, boxes, width);
+				std::cout.rdbuf(cout_buff);								// returning control to cout
+				std::cout<<filename<<".txt has been created!"<<std::endl;
+				std::cout<<"Press any key to continue..."<<std::endl;
+				wait();
+			}
 		}
 		else{
 			std::cout<<"Forward Linked List is empty!"<<std::endl;
@@ -579,44 +594,49 @@ namespace simplicity{
 
 	}
 
+	template<typename T>
+	void print2DContent(T &content, int cols, int rows, int width){
+		printTop(cols, width);
+		for (int rowNum = 0; rowNum < rows; rowNum++){          //Loop through each row and print out every number
+			printContent(content, 0, cols, width, rowNum);
+			if(!(rowNum == rows-1))
+			printTop(cols, width);
+		}
+		printBottom(0, cols, width);                      //Special version of printContent that adds extra spacing on the indexes
+		
+	}
 
 	template<typename T>
 	void print2DArray(T &content, int cols, int rows, std::string filename){              //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
-	    if(!checkFileCall())
-            clearScreen();
-        setFileCall(1);                                             //Always print to file, as the size of the terminal is a concern and the structure requires the sizes to remain
-        std::ofstream ofs{filename + ".txt"};
-        auto cout_buff = std::cout.rdbuf();
-        std::cout.rdbuf(ofs.rdbuf());
-        //Size is irrelevant if we are only printing to output file
-        //And the length of each line is integral to the data structure, the following call does remain however so that we can confirm it is not empty
         int length = sizeof(content)/sizeof(content[0][0]);
         if (length > 0){
+			clearScreen();
             std::cout<<"Printing 2D Array"<<std::endl;
             int width = widestMember(content, cols, rows);
-            printTop(cols, width);
-            for (int rowNum = 0; rowNum < rows; rowNum++){          //Loop through each row and print out every number
-                printContent(content, 0, cols, width, rowNum);
-                if(!(rowNum == rows-1))
-                printTop(cols, width);
-            }
-            printBottom(0, cols, width);                      //Special version of printContent that adds extra spacing on the indexes
-            if(checkFileCall()){
-               setFileCall(0);
-            }
-            else{
+			int totalWidth = (width * cols) + 3;
+			if(totalWidth < rogueutil::tcols()){
+				print2DContent(content, cols, rows, width);
                 std::cout<<"Press any key to continue..."<<std::endl;
                 wait();
-            }
+			}	
+			else{
+				setFileCall(1);
+				clearScreen();
+				std::ofstream ofs{filename + ".txt"};
+				auto cout_buff = std::cout.rdbuf();
+				std::cout.rdbuf(ofs.rdbuf());
+				print2DContent(content, cols, rows, width);
+				std::cout.rdbuf(cout_buff);
+				setFileCall(0);
+				std::cout<<filename<<".txt has been created!"<<std::endl;
+				std::cout<<"Press any key to continue..."<<std::endl;
+				wait();	
+			}
         }
         else{
             std::cout<<"Your array is empty!";
         }
-        std::cout.rdbuf(cout_buff);
-        std::cout<<filename<<".txt has been created!"<<std::endl;
-        std::cout<<"Press any key to continue...";
-        wait();
-        return;
+
 	}
 
 	template<typename T>

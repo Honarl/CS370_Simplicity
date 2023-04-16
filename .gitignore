@@ -12,3 +12,8 @@ twodarray.cpp
 linkedList.cpp
 SimplicityForwardLinkedListOutput.txt
 test.txt
+forwardlist.txt
+TestCharLinkedListOutput.txt
+TestInt2DArrayOutput.txt
+TestStringLinkedListOutput.txt
+TestString2DArrayOutput.txt

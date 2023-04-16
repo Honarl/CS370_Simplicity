@@ -188,6 +188,9 @@ void testCase2DArray(){
 /*******************************************************************************************************************************************************************/
 
 int main (void){
-    testCase2DArray();
+	testCaseList();
+    //testCase2DArray();
+	//testCaseQueue();
+	//testCaseStacks();
     return EXIT_SUCCESS;
 }
