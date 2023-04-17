@@ -171,7 +171,7 @@ void testCase2DArray(){
             test2DInt[i][j] = rand() % 1000;
         }
     }
-    print2DArray(test2DInt, 2, 3, "TestInt2DArrayOutput");
+    //print2DArray(test2DInt, 2, 3, "TestInt2DArrayOutput");
 
 // 2D Array Char
     char test2DChar[5][6] = { 'a','b','c','d','e','f',
@@ -179,17 +179,21 @@ void testCase2DArray(){
                           'm','n','o','p','q','r',
                           's','t','u','v','w','x',
                           'y','z','a','b','c','d'};
-    //print2DArray(test2DChar, 5, 6, "TestChar2DArrayOutput");
+    print2DArray(test2DChar, 5, 6, "TestChar2DArrayOutput");
 
 // 2D Array Strings
     string test2DString[2][2] = {"kohei","clark","maybe","work"};
-    print2DArray(test2DString, 2,2, "TestString2DArrayOutput");
+    //print2DArray(test2DString, 2,2, "TestString2DArrayOutput");
+
+    std::array<std::array<int, 3>, 2> stlarray = {1,2,3,4,5,6};
+
+    print2DArray(stlarray, 3, 2, "uhohstinky");
 }
 /*******************************************************************************************************************************************************************/
 
 int main (void){
-	testCaseList();
-    //testCase2DArray();
+	//testCaseList();
+    testCase2DArray();
 	//testCaseQueue();
 	//testCaseStacks();
     return EXIT_SUCCESS;
