@@ -332,6 +332,53 @@ namespace simplicity{
 	}
 
 	template <typename T>
+	void printListContent(std::list<T> &content, int boxes, std::string outer, int width){
+		if(!checkFileCall())
+			rogueutil::setColor(2);		
+		for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
+			std::cout<<outer;
+		if(!checkFileCall())
+			rogueutil::setColor(2);
+		std::cout<<std::endl<<"   ";							// ending top line
+		for(int i = 0; i < boxes; i++){
+			if(!checkFileCall())
+				rogueutil::setColor(2);
+			std::cout<<"| | "<<std::setw(width)<<" "<<" | |-->";
+			if(!checkFileCall())
+				rogueutil::setColor(15);
+		}
+		std::cout<<std::endl<<"   ";
+		for(typename std::list<T>::iterator it = content.begin(); it != content.end(); ++it){
+			if(!checkFileCall())
+				rogueutil::setColor(2);
+			std::cout<<"| | ";
+			if(!checkFileCall())
+				rogueutil::setColor(15);
+			std::cout<<std::setw(width)<<*it;
+			if(!checkFileCall())
+				rogueutil::setColor(2);
+			std::cout<<" | |   ";			// printing content
+			if(!checkFileCall())
+				rogueutil::setColor(15);
+		}
+		std::cout<<std::endl;
+		if(!checkFileCall())
+			rogueutil::setColor(2);
+		for(int i = 0; i < boxes; i++)
+			std::cout<<"<--| | "<<std::setw(width)<<" "<<" | |";	// ending content line
+		if(!checkFileCall())
+			rogueutil::setColor(15);	
+		std::cout<<std::endl;	
+		if(!checkFileCall())
+			rogueutil::setColor(2);
+		for(int i = 0; i < boxes; i++)							// printing bottom of boxes
+			std::cout<<outer;
+		if(!checkFileCall())
+			rogueutil::setColor(15);
+		std::cout<<std::endl;									// ending bottom line
+	}
+	
+	template <typename T>
 	void printLinkedList(std::list<T> &content, std::string filename){
 		if(!content.empty()){										// verifying that there is stuff to be printed
 			clearScreen();
@@ -342,30 +389,25 @@ namespace simplicity{
 			for(int i = 0; i < (width + 2); i++)					// top side
 				outer += "-";
 			outer += "+-+";											// top right
-			std::ofstream ofs{filename + ".txt"};	// declaring output file
-			auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
-			std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
-			std::cout<<"Printing Linked List"<<std::endl;
-			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
-				std::cout<<outer;
-			std::cout<<std::endl<<"   ";							// ending top line
-			for(int i = 0; i < boxes; i++)
-				std::cout<<"| | "<<std::setw(width)<<" "<<" | |-->";
-			std::cout<<std::endl<<"   ";
-			for(typename std::list<T>::iterator it = content.begin(); it != content.end(); ++it){
-				std::cout<<"| | "<<std::setw(width)<<*it<<" | |   ";			// printing content
+			if((outer.length() * boxes) < rogueutil::tcols()){			
+				std::cout<<"Printing Linked List"<<std::endl;	
+				printListContent(content, boxes, outer, width);
+				std::cout<<"Press any key to continue..."<<std::endl;	
+				wait();
+				}
+			else{
+				
+				std::ofstream ofs{filename + ".txt"};					// declaring output file
+				auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
+				std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
+				setFileCall(1);
+				printListContent(content, boxes, outer, width);
+				setFileCall(0);
+				std::cout.rdbuf(cout_buff);								// returning control to cout
+				std::cout<<filename<<".txt has been created!"<<std::endl;
+				std::cout<<"Press any key to continue..."<<std::endl;
+				wait();
 			}
-			std::cout<<std::endl;
-			for(int i = 0; i < boxes; i++)
-				std::cout<<"<--| | "<<std::setw(width)<<" "<<" | |";	// ending content line
-			std::cout<<std::endl;
-			for(int i = 0; i < boxes; i++)							// printing bottom of boxes
-				std::cout<<outer;
-			std::cout<<std::endl;									// ending bottom line
-			std::cout.rdbuf(cout_buff);								// returning control to cout
-			std::cout<<filename<<".txt has been created!"<<std::endl;
-			std::cout<<"Press any key to continue..."<<std::endl;
-			wait();
 		}
 		else{
 			std::cout<<"Linked List is empty!";
@@ -374,21 +416,40 @@ namespace simplicity{
 	
 	template <typename T>
 	void printListContent(std::string outer, std::forward_list<T> content, int boxes, int width){
-			for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
+		if(!checkFileCall())
+			rogueutil::setColor(2);
+		for(int i = 0; i < boxes; i++)							// printing top of box based on number of box
 			std::cout<<outer;
-			std::cout<<std::endl;									// ending top line
-			for(typename std::forward_list<T>::iterator it = content.begin(); it != content.end(); ++it){
-				std::cout<<"| "<<std::setw(width)<<*it <<" | |-->";	// printing content
-			}
-			std::cout<<std::endl;									// ending content line
-			for(int i = 0; i < boxes; i++)							// printing bottom of boxes
-				std::cout<<outer;
-			std::cout<<std::endl;									// ending bottom line
+		if(!checkFileCall())
+			rogueutil::setColor(15);		
+		std::cout<<std::endl;									// ending top line
+		for(typename std::forward_list<T>::iterator it = content.begin(); it != content.end(); ++it){
+			if(!checkFileCall())
+				rogueutil::setColor(2);		
+			std::cout<<"| ";
+		if(!checkFileCall())
+			rogueutil::setColor(15);		
+		std::cout<<std::setw(width)<<*it; 
+		if(!checkFileCall())
+			rogueutil::setColor(2);		
+		std::cout<<" | |-->";	// printing content
+		if(!checkFileCall())
+			rogueutil::setColor(15);		
+		}
+		std::cout<<std::endl;									// ending content line
+		if(!checkFileCall())
+			rogueutil::setColor(2);
+		for(int i = 0; i < boxes; i++)							// printing bottom of boxes
+			std::cout<<outer;
+		if(!checkFileCall())
+			rogueutil::setColor(15);
+		std::cout<<std::endl;									// ending bottom line
 	}
 
 	template <typename T>
 	void printForwardLinkedList(std::forward_list<T> &content, std::string filename){
 		if(!content.empty()){										// verifying that there is stuff to be printed
+			clearScreen();
 			int boxes = std::distance(content.begin(), content.end()); ;								// getting number of elements
 			int width = widestMember(content, boxes);				// figuring out box width
 			std::string outer;										// creating string for top & bottom of box
@@ -399,15 +460,19 @@ namespace simplicity{
 			for(int i = 0; i < 3; i++)								// spaces to account for arrow between boxes
 				outer += " ";
 				
-			if(outer.length() < rogueutil::tcols()){
+			if((outer.length() * boxes) < rogueutil::tcols()){
 				std::cout<<"Printing Forward Linked List"<<std::endl;
 				printListContent(outer, content, boxes, width);
-			}
+				std::cout<<"Press any key to continue..."<<std::endl;
+				wait();
+				}
 			else{
 				std::ofstream ofs{filename + ".txt"};					// declaring output file
 				auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
 				std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
+				setFileCall(1);
 				printListContent(outer, content, boxes, width);
+				setFileCall(0);
 				std::cout.rdbuf(cout_buff);								// returning control to cout
 				std::cout<<filename<<".txt has been created!"<<std::endl;
 				std::cout<<"Press any key to continue..."<<std::endl;
