@@ -417,13 +417,13 @@ namespace simplicity{
 				}
 			else{
 				std::cout<<"Too large for screen, printing to file!"<<std::endl;
-				listToFile(content, filename);				
+				listToFile(content, filename);
 			}
 		}
 		else{
 			std::cout<<"Linked List is empty!";
 			std::cout<<"Press any key to continue..."<<std::endl;
-			wait();			
+			wait();
 		}
 	}
 
@@ -470,7 +470,7 @@ namespace simplicity{
 		outer += "+-+";											// top right
 		for(int i = 0; i < 3; i++)								// spaces to account for arrow between boxes
 			outer += " ";
-			
+
 		std::ofstream ofs{filename + ".txt"};					// declaring output file
 		auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
 		std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
@@ -701,14 +701,14 @@ namespace simplicity{
 	}
 
 	template <typename T>
-	void arrayToFile(T &content, int cols, int rows, std::string filename){
+	void arrayToFile(T &content, int rows, int cols, std::string filename){
 		int width = widestMember(content, cols, rows);
 		setFileCall(1);
 		clearScreen();
 		std::ofstream ofs{filename + ".txt"};
 		auto cout_buff = std::cout.rdbuf();
 		std::cout.rdbuf(ofs.rdbuf());
-		print2DContent(content, cols, rows, width);
+		print2DContent(content, rows, cols, width);
 		std::cout.rdbuf(cout_buff);
 		setFileCall(0);
 		std::cout<<filename<<".txt has been created!"<<std::endl;
