@@ -416,22 +416,8 @@ namespace simplicity{
 				wait();
 				}
 			else{
-<<<<<<< Updated upstream
-
-				std::ofstream ofs{filename + ".txt"};					// declaring output file
-				auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
-				std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
-				setFileCall(1);
-				printListContent(content, boxes, outer, width);
-				setFileCall(0);
-				std::cout.rdbuf(cout_buff);								// returning control to cout
-				std::cout<<filename<<".txt has been created!"<<std::endl;
-				std::cout<<"Press any key to continue..."<<std::endl;
-				wait();
-=======
 				std::cout<<"Too large for screen, printing to file!"<<std::endl;
 				listToFile(content, filename);				
->>>>>>> Stashed changes
 			}
 		}
 		else{
@@ -744,22 +730,8 @@ namespace simplicity{
                 wait();
 			}
 			else{
-<<<<<<< Updated upstream
-				setFileCall(1);
-				clearScreen();
-				std::ofstream ofs{filename + ".txt"};
-				auto cout_buff = std::cout.rdbuf();
-				std::cout.rdbuf(ofs.rdbuf());
-				print2DContent(content, rows, cols, width);
-				std::cout.rdbuf(cout_buff);
-				setFileCall(0);
-				std::cout<<filename<<".txt has been created!"<<std::endl;
-				std::cout<<"Press any key to continue..."<<std::endl;
-				wait();
-=======
 				std::cout<<"Too large for screen! Printing to file."<<std::endl;
 				arrayToFile(content, cols, rows, filename);
->>>>>>> Stashed changes
 			}
         }
         else{
