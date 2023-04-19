@@ -171,7 +171,7 @@ void testCase2DArray(){
             test2DInt[i][j] = rand() % 1000;
         }
     }
-    //print2DArray(test2DInt, 2, 3, "TestInt2DArrayOutput");
+    print2DArray(test2DInt, 2, 3, "TestInt2DArrayOutput");
 
 // 2D Array Char
     char test2DChar[5][6] = { 'a','b','c','d','e','f',
@@ -181,13 +181,21 @@ void testCase2DArray(){
                           'y','z','a','b','c','d'};
     print2DArray(test2DChar, 5, 6, "TestChar2DArrayOutput");
 
+    bool test2DBool[2][3];
+    test2DBool[0][0] = true;
+    test2DBool[1][0] = false;
+    test2DBool[0][1] = true;
+    test2DBool[1][1] = false;
+    test2DBool[0][2] = true;
+    test2DBool[1][2] = false;
+    print2DArray(test2DBool, 2, 3, "asfd;ljasdf");
+
 // 2D Array Strings
     string test2DString[2][2] = {"kohei","clark","maybe","work"};
-    //print2DArray(test2DString, 2,2, "TestString2DArrayOutput");
+    print2DArray(test2DString, 2,2, "TestString2DArrayOutput");
 
     std::array<std::array<int, 3>, 2> stlarray = {1,2,3,4,5,6};
-
-    print2DArray(stlarray, 3, 2, "uhohstinky");
+    print2DArray(stlarray, 2, 3, "uhohstinky");
 }
 /*******************************************************************************************************************************************************************/
 
