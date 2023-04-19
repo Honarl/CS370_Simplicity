@@ -214,7 +214,6 @@ namespace simplicity{
 		std::cout<<std::endl;									// end index line
 	}
 
-
 	template <typename T>
 	int widestMember(std::list<T> &content, int len){
 		int widest = 1;								// Setting current widest to minimum of one
@@ -379,6 +378,27 @@ namespace simplicity{
 	}
 
 	template <typename T>
+	void listToFile(std::list<T> &content, std::string filename){
+		int boxes = content.size();								// getting number of elements
+		int width = widestMember(content, boxes);				// figuring out box width
+		std::string outer;										// creating string for top & bottom of box
+		outer += "   +-+";										// top left corner of box
+		for(int i = 0; i < (width + 2); i++)					// top side
+			outer += "-";
+		outer += "+-+";											// top right
+		std::ofstream ofs{filename + ".txt"};					// declaring output file
+		auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
+		std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
+		setFileCall(1);
+		printListContent(content, boxes, outer, width);
+		setFileCall(0);
+		std::cout.rdbuf(cout_buff);								// returning control to cout
+		std::cout<<filename<<".txt has been created!"<<std::endl;
+		std::cout<<"Press any key to continue..."<<std::endl;
+		wait();
+	}
+
+	template <typename T>
 	void printLinkedList(std::list<T> &content, std::string filename){
 		if(!content.empty()){										// verifying that there is stuff to be printed
 			clearScreen();
@@ -396,6 +416,7 @@ namespace simplicity{
 				wait();
 				}
 			else{
+<<<<<<< Updated upstream
 
 				std::ofstream ofs{filename + ".txt"};					// declaring output file
 				auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
@@ -407,10 +428,16 @@ namespace simplicity{
 				std::cout<<filename<<".txt has been created!"<<std::endl;
 				std::cout<<"Press any key to continue..."<<std::endl;
 				wait();
+=======
+				std::cout<<"Too large for screen, printing to file!"<<std::endl;
+				listToFile(content, filename);				
+>>>>>>> Stashed changes
 			}
 		}
 		else{
 			std::cout<<"Linked List is empty!";
+			std::cout<<"Press any key to continue..."<<std::endl;
+			wait();			
 		}
 	}
 
@@ -447,6 +474,30 @@ namespace simplicity{
 	}
 
 	template <typename T>
+	void forwardListToFile(std::forward_list<T> &content, std::string filename){
+		int boxes = std::distance(content.begin(), content.end()); ;								// getting number of elements
+		int width = widestMember(content, boxes);				// figuring out box width
+		std::string outer;										// creating string for top & bottom of box
+		outer += "+";											// top left corner of box
+		for(int i = 0; i < (width + 2); i++)					// top side
+			outer += "-";
+		outer += "+-+";											// top right
+		for(int i = 0; i < 3; i++)								// spaces to account for arrow between boxes
+			outer += " ";
+			
+		std::ofstream ofs{filename + ".txt"};					// declaring output file
+		auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
+		std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
+		setFileCall(1);
+		printListContent(outer, content, boxes, width);
+		setFileCall(0);
+		std::cout.rdbuf(cout_buff);								// returning control to cout
+		std::cout<<filename<<".txt has been created!"<<std::endl;
+		std::cout<<"Press any key to continue..."<<std::endl;
+		wait();
+	}
+
+	template <typename T>
 	void printForwardLinkedList(std::forward_list<T> &content, std::string filename){
 		if(!content.empty()){										// verifying that there is stuff to be printed
 			clearScreen();
@@ -467,16 +518,8 @@ namespace simplicity{
 				wait();
 				}
 			else{
-				std::ofstream ofs{filename + ".txt"};					// declaring output file
-				auto cout_buff = std::cout.rdbuf();						// saves pointer to output buffer
-				std::cout.rdbuf(ofs.rdbuf());							// substitute internal buffer with file buffer
-				setFileCall(1);
-				printListContent(outer, content, boxes, width);
-				setFileCall(0);
-				std::cout.rdbuf(cout_buff);								// returning control to cout
-				std::cout<<filename<<".txt has been created!"<<std::endl;
-				std::cout<<"Press any key to continue..."<<std::endl;
-				wait();
+				std::cout<<"Too large for screen, printing to file!"<<std::endl;
+				forwardListToFile(content, filename);
 			}
 		}
 		else{
@@ -671,6 +714,22 @@ namespace simplicity{
 
 	}
 
+	template <typename T>
+	void arrayToFile(T &content, int cols, int rows, std::string filename){
+		int width = widestMember(content, cols, rows);
+		setFileCall(1);
+		clearScreen();
+		std::ofstream ofs{filename + ".txt"};
+		auto cout_buff = std::cout.rdbuf();
+		std::cout.rdbuf(ofs.rdbuf());
+		print2DContent(content, cols, rows, width);
+		std::cout.rdbuf(cout_buff);
+		setFileCall(0);
+		std::cout<<filename<<".txt has been created!"<<std::endl;
+		std::cout<<"Press any key to continue..."<<std::endl;
+		wait();
+	}
+
 	template<typename T>
 	void print2DArray(T &content, int rows, int cols, std::string filename){              //This is primarily copy-pasted from the regular arrays with some iteration across the y axis
         int length = sizeof(content)/sizeof(content[0][0]);
@@ -678,13 +737,14 @@ namespace simplicity{
 			clearScreen();
             std::cout<<"Printing 2D Array"<<std::endl;
             int width = widestMember(content, cols, rows);
-			int totalWidth = (width * cols) + 3;
+			int totalWidth = ((width + 3) * cols) + 3;
 			if(totalWidth < rogueutil::tcols()){
 				print2DContent(content, rows, cols, width);
                 std::cout<<"Press any key to continue..."<<std::endl;
                 wait();
 			}
 			else{
+<<<<<<< Updated upstream
 				setFileCall(1);
 				clearScreen();
 				std::ofstream ofs{filename + ".txt"};
@@ -696,6 +756,10 @@ namespace simplicity{
 				std::cout<<filename<<".txt has been created!"<<std::endl;
 				std::cout<<"Press any key to continue..."<<std::endl;
 				wait();
+=======
+				std::cout<<"Too large for screen! Printing to file."<<std::endl;
+				arrayToFile(content, cols, rows, filename);
+>>>>>>> Stashed changes
 			}
         }
         else{
