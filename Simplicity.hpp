@@ -50,6 +50,45 @@ namespace simplicity{
 			rogueutil::setColor(15);				// setting back to original color
 	}
 
+	void printBottom(int start, int printWidth, int width){
+			int end = start + printWidth;
+			if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
+				rogueutil::setColor(2);								// setting color to green
+			std::cout<<"+";											// ending leftmost corner
+			for(int j = 0; j < printWidth; j++){ 					// loop to print corner marker
+				for(int i = 0; i < (width + 2); i++){				// loop to print bottom line
+					std::cout<<"-";
+				}
+				std::cout<<"+";
+			}
+			std::cout<<std::endl;									// ending bottom of structure
+
+			for(int i = start; i < end; i++){						// loop to print indexes
+				std::cout<<" ";
+				int halfway = 0;									// initializing to zero
+				if((width+2) % 2 == 0){								// checking if member takes up an even number of spaces
+					halfway = (width / 2);							// setting midpoint
+					if(i > 10)										// to account for double digit numbers
+						halfway -= 1;
+					std::cout<<" "<<std::setw(halfway)<<" "<<i;		// printing index with appropriate whitespace
+					for(int j = 0; j < halfway; j++)				// loop to finish printing out whitespace
+						std::cout<<" ";
+				}
+				else{												// widest data must take up an odd number of spaces
+					halfway = (width / 2) + 1 ; 					// setting halfway point and rounding up
+					if(i > 10)										// to account for double digit numbers
+						halfway -= 1;
+					std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index
+					for(int j = 0; j < halfway; j++)				// loop to finish printing whitespace
+						std::cout<<" ";
+				}
+			}
+			if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
+				rogueutil::setColor(15);							// setting back to original color
+			std::cout<<std::endl;									// end index line
+		}
+
+
 	template <typename T>
 	void printContent(T content[], int start, int length, int width){
 		if(!checkFileCall())					// checking to avoid ANSI esc characters in txt file
@@ -187,45 +226,7 @@ namespace simplicity{
 		printBottom(0, cols, width);                     		// Special version of printContent that adds extra spacing on the indexes
 
 	}
-
-	void printBottom(int start, int printWidth, int width){
-		int end = start + printWidth;
-		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
-			rogueutil::setColor(2);								// setting color to green
-		std::cout<<"+";											// ending leftmost corner
-		for(int j = 0; j < printWidth; j++){ 					// loop to print corner marker
-			for(int i = 0; i < (width + 2); i++){				// loop to print bottom line
-				std::cout<<"-";
-			}
-			std::cout<<"+";
-		}
-		std::cout<<std::endl;									// ending bottom of structure
-
-		for(int i = start; i < end; i++){						// loop to print indexes
-			std::cout<<" ";
-			int halfway = 0;									// initializing to zero
-			if((width+2) % 2 == 0){								// checking if member takes up an even number of spaces
-				halfway = (width / 2);							// setting midpoint
-				if(i > 10)										// to account for double digit numbers
-					halfway -= 1;
-				std::cout<<" "<<std::setw(halfway)<<" "<<i;		// printing index with appropriate whitespace
-				for(int j = 0; j < halfway; j++)				// loop to finish printing out whitespace
-					std::cout<<" ";
-			}
-			else{												// widest data must take up an odd number of spaces
-				halfway = (width / 2) + 1 ; 					// setting halfway point and rounding up
-				if(i > 10)										// to account for double digit numbers
-					halfway -= 1;
-				std::cout<<" "<<std::setw(halfway)<<i;			// printing whitespace and index
-				for(int j = 0; j < halfway; j++)				// loop to finish printing whitespace
-					std::cout<<" ";
-			}
-		}
-		if(!checkFileCall())									// checking to avoid ANSI esc characters in txt file
-			rogueutil::setColor(15);							// setting back to original color
-		std::cout<<std::endl;									// end index line
-	}
-
+	
 	template <typename T>
 	int widestMember(std::list<T> &content, int len){
 		int widest = 1;								// Setting current widest to minimum of one
@@ -377,8 +378,6 @@ namespace simplicity{
 			rogueutil::setColor(2);									// setting green
 		for(int i = 0; i < boxes; i++)
 			std::cout<<"<--| | "<<std::setw(width)<<" "<<" | |";	// showing link to element to the left 
-		if(!checkFileCall())
-			rogueutil::setColor(15);								// setting white
 		std::cout<<std::endl;								
 		for(int i = 0; i < boxes; i++)								// printing bottom of boxes
 			std::cout<<outer;
